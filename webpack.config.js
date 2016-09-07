@@ -1,4 +1,5 @@
 module.exports = {
+  devtool: 'source-map',
   entry: './src/index',
   output: {
     path: './dist',
@@ -6,9 +7,9 @@ module.exports = {
   },
   module: {
     loaders: [
-      { 
-        test: /\.jsx?$/, 
-        exclude: /node_modules/, 
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015']

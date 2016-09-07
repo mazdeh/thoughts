@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-class App extends Component {
-  render() {
-    return <div>Hello, Thoughts!</div>;
-  }
-}
+import App from './containers/App';
+import configureStore from './stores/configureStore';
+
+const store = configureStore();
 
 ReactDOM.render(
-  <App />,
+  <App store={store} />,
   document.getElementById('app')
 );
