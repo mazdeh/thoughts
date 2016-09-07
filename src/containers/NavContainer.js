@@ -7,8 +7,8 @@ export default class Nav extends Component {
 
   render() {
     return(
-      <div>
-        Hello, Thoughts. Again.
+      <div className="nav-container">
+        <span className="nav-logo">T</span>
       </div>
     )
   }

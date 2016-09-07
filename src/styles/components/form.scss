@@ -1,0 +1,30 @@
+main {
+  padding: 100px;
+
+  h3 {
+    font-family: 'Open Sans', monospace;
+    margin-bottom: 30px;
+    font-size: 2em;
+  }
+
+  article {
+    font-family: 'Inconsolata', monospace;
+    font-weight: normal;
+    font-size: 1.1em;
+    line-height: 1.5em;
+
+    div {
+      margin: 20px 0 20px 0;
+    }
+  }
+}
+
+[contenteditable="true"]:active,
+[contenteditable="true"]:focus {
+  outline: none;
+}
+
+[contenteditable="true"]:empty:before {
+  content: attr(placeholder);
+  opacity: .3;
+}

@@ -7,6 +7,7 @@ module.exports = {
   },
   module: {
     loaders: [
+      { test: /\.scss/, loader: 'style!css!sass' },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
