@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
 import App from './containers/App';
 import configureStore from './stores/configureStore';
@@ -7,6 +8,8 @@ import configureStore from './stores/configureStore';
 const store = configureStore();
 
 ReactDOM.render(
-  <App store={store} />,
+  <Provider store={store} >
+    <App />
+  </Provider>,
   document.getElementById('app')
 );

@@ -8,6 +8,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.scss/, loader: 'style!css!sass' },
+      { test: /\.json$/, loader: 'json-loader' },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,

@@ -2,15 +2,27 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import NavContainer from './NavContainer';
-import Form from '../components/Form';
+import ThoughtsContainer from '../components/ThoughtsContainer';
 import '../styles/main.scss';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    const { dispatch } = this.props;
+    const set = { type: 'set_thoughts' }
+    dispatch(set);
+  }
+
   render() {
     return (
-      <span className="container">
+      <span>
         <NavContainer />
-        <Form />
+        <ThoughtsContainer />
+        <button onClick={this.handleClick}>dispatch</button>
       </span>
     )
   }
@@ -21,6 +33,5 @@ function mapStateToProps(state) {
     state
   }
 }
-
 
 export default connect(mapStateToProps)(App);
