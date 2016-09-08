@@ -19,7 +19,7 @@ class App extends Component {
 
   render() {
     return (
-      <span>
+      <span className="container">
         <NavContainer />
         <ThoughtsContainer />
         <button onClick={this.handleClick}>dispatch</button>
