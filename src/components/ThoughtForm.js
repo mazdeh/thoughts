@@ -13,7 +13,6 @@ export default class ThoughtForm extends Component {
       this.setState({editorState});
       const plainText = editorState.getCurrentContent().getPlainText();
       const textScore = sentiment(plainText);
-      console.log('textScore: ', textScore);
     }
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
@@ -37,7 +36,7 @@ export default class ThoughtForm extends Component {
 
   render() {
     return (
-      <div className="editor" onClick={this.focus}>
+      <div className="row" onClick={this.focus}>
         <Editor
           className="editor"
           editorState={this.state.editorState}

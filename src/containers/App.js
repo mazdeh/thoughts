@@ -6,14 +6,25 @@ import ThoughtsContainer from '../components/ThoughtsContainer';
 import '../styles/main.scss';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
+  componentDidMount() {
+    const thoughtsArray = [
+      {
+        text: 'vahid',
+        score: 0
+      },
+      {
+        text: 'saeed',
+        score: 0
+      },
+    ];
 
-  handleClick() {
+
     const { dispatch } = this.props;
-    const set = { type: 'set_thoughts' }
+    const set = {
+      type: 'set_thoughts',
+      thoughtsArray
+
+    }
     dispatch(set);
   }
 
@@ -22,7 +33,6 @@ class App extends Component {
       <span className="container">
         <NavContainer />
         <ThoughtsContainer />
-        <button onClick={this.handleClick}>dispatch</button>
       </span>
     )
   }

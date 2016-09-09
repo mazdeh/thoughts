@@ -1,0 +1,15 @@
+.container {
+  margin: 5.5em auto 5.5em auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 200px;
+  max-width: 900px;
+  padding: 30px;
+  margin: 30px auto 30px auto;
+  background-color: rgba(0, 0, 0, .01);
+}

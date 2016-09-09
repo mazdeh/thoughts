@@ -8,7 +8,6 @@ import ThoughtForm from './ThoughtForm';
 class ThoughtsContainer extends Component {
   render() {
     const { thoughts } = this.props;
-    console.log('thoughts: ', thoughts);
     return (
       <span>
         <ThoughtForm />
@@ -19,7 +18,7 @@ class ThoughtsContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const { thoughts } = state.main;
+  const { thoughts } = state.user;
   return {
     thoughts
   }
