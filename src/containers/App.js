@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+// remove this later?
+import * as types from '../constants/ActionTypes';
+
 import NavContainer from './NavContainer';
 import ThoughtsContainer from '../components/ThoughtsContainer';
 import '../styles/main.scss';
@@ -14,16 +17,14 @@ class App extends Component {
       },
       {
         text: 'saeed',
-        score: 0
-      },
+        score: 2
+      }
     ];
-
 
     const { dispatch } = this.props;
     const set = {
-      type: 'set_thoughts',
+      type: types.SET_THOUGHTS,
       thoughtsArray
-
     }
     dispatch(set);
   }

@@ -7,10 +7,10 @@ import ThoughtForm from './ThoughtForm';
 
 class ThoughtsContainer extends Component {
   render() {
-    const { thoughts } = this.props;
+    const { dispatch, thoughts } = this.props;
     return (
       <span>
-        <ThoughtForm />
+        <ThoughtForm {...this.props} dispatch={dispatch}/>
         <ThoughtList thoughts={thoughts} />
       </span>
     )

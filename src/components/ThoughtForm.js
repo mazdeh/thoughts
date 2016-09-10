@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
-import sentiment from 'sentiment';
+import { throttle } from 'underscore';
 
+import { saveThought } from '../actions/user';
 
 export default class ThoughtForm extends Component {
   constructor() {
     super()
-    this.state = {editorState: EditorState.createEmpty()};
+    this.handleKeyCommand = this.handleKeyCommand.bind(this);
+    this.saveContent = throttle(this.saveContent, 10000);
+
     this.focus = () => this.refs.editor.focus();
     this.onTab = (e) => this._onTab(e);
+
+    this.state = {
+      editorState: EditorState.createEmpty()
+    };
+
     this.onChange = (editorState) => {
-      this.setState({editorState});
-      const plainText = editorState.getCurrentContent().getPlainText();
-      const textScore = sentiment(plainText);
+      this.setState({ editorState });
+      const thoughtContent = editorState.getCurrentContent().toJS();
+      this.saveContent(thoughtContent);
     }
-    this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
 
   // cmd+b/i etc
@@ -32,6 +39,11 @@ export default class ThoughtForm extends Component {
     console.log('ansts');
     const maxDepth = 4;
     this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth));
+  }
+
+  saveContent(thoughtContent) {
+    const { dispatch } = this.props;
+    dispatch(saveThought(thoughtContent));
   }
 
   render() {
