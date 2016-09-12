@@ -8,9 +8,9 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  height: 200px;
+  height: auto;
   max-width: 900px;
   padding: 30px;
   margin: 30px auto 30px auto;
-  background-color: rgba(0, 0, 0, .01);
+  background-color: rgba(0, 0, 0, .1);
 }

@@ -1,7 +1,18 @@
 import * as types from '../constants/ActionTypes';
-// import { Map, List } from 'immutable';
+import { Map, List } from 'immutable';
 
-export default function(state = {}, action) {
+const initialState = List([
+    // {
+    //   id: 1,
+    //   text: 'vahid'
+    // },
+    // {
+    //   id: 2,
+    //   text: 'saeed'
+    // }
+]);
+
+export default function(state = initialState, action) {
   switch(action.type) {
     case types.SAVE_THOUGHT:
       return _saveThought(state, action);
@@ -14,5 +25,18 @@ export default function(state = {}, action) {
 }
 
 function _saveThought(state, action) {
-  return state.set('')
+  console.log('action: ', action);
+  return state.update(state.findIndex((entry) => {
+    return entry.get('id') === action.id;
+  }), (entry) => {
+    if (!entry) {
+      return state.push({
+        id: action.payload.id,
+        content: action.payload.content
+      })
+    }
+    console.log('entry: ', entry.toJS());
+    return entry.set('content: ', action.payload.content)
+  }
+);
 }

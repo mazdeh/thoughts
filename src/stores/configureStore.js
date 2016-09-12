@@ -1,7 +1,8 @@
 import { createStore } from 'redux';
 import rootReducer from '../reducers/index';
+import { Map } from 'immutable';
 
-const initialState = {};
+const initialState = Map({});
 
 export default function configureStore(initialState) {
   const store = createStore(rootReducer, initialState,

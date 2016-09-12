@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { throttle } from 'underscore';
+import uuid from 'node-uuid';
 
 import { saveThought } from '../actions/user';
 
@@ -11,9 +12,9 @@ export default class ThoughtForm extends Component {
     this.saveContent = throttle(this.saveContent, 10000);
 
     this.focus = () => this.refs.editor.focus();
-    this.onTab = (e) => this._onTab(e);
 
     this.state = {
+      id: uuid.v4(),
       editorState: EditorState.createEmpty()
     };
 
@@ -34,16 +35,10 @@ export default class ThoughtForm extends Component {
     return false;
   }
 
-  _onTab(e) {
-    e.preventDefault();
-    console.log('ansts');
-    const maxDepth = 4;
-    this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth));
-  }
-
   saveContent(thoughtContent) {
     const { dispatch } = this.props;
-    dispatch(saveThought(thoughtContent));
+    const id = this.state.id;
+    dispatch(saveThought(id, thoughtContent));
   }
 
   render() {
@@ -56,7 +51,7 @@ export default class ThoughtForm extends Component {
           handleKeyCommand={this.handleKeyCommand}
           onChange={this.onChange}
           onTab={this.onTab}
-          placeholder="Enter some text..."
+          placeholder="Start Writing..."
           ref="editor"
           />
       </div>

@@ -10,23 +10,23 @@ import '../styles/main.scss';
 
 class App extends Component {
   componentDidMount() {
-    const thoughtsArray = [
-      {
-        text: 'vahid',
-        score: 0
-      },
-      {
-        text: 'saeed',
-        score: 2
-      }
-    ];
-
-    const { dispatch } = this.props;
-    const set = {
-      type: types.SET_THOUGHTS,
-      thoughtsArray
-    }
-    dispatch(set);
+    // const thoughtsArray = [
+    //   {
+    //     text: 'vahid',
+    //     score: 0
+    //   },
+    //   {
+    //     text: 'saeed',
+    //     score: 2
+    //   }
+    // ];
+    //
+    // const { dispatch } = this.props;
+    // const set = {
+    //   type: types.SET_THOUGHTS,
+    //   thoughtsArray
+    // }
+    // dispatch(set);
   }
 
   render() {

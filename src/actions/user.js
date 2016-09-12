@@ -1,8 +1,11 @@
 import * as types from '../constants/ActionTypes';
 
-export function saveThought(thoughtContent) {
+export function saveThought(id, content) {
   return {
     type: types.SAVE_THOUGHT,
-    thoughtContent
+    payload: {
+      id,
+      content
+    }
   }
 }
