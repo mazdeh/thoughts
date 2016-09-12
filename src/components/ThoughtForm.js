@@ -38,6 +38,7 @@ export default class ThoughtForm extends Component {
   saveContent(thoughtContent) {
     const { dispatch } = this.props;
     const id = this.state.id;
+    console.log('thoughtContent: ', thoughtContent);
     dispatch(saveThought(id, thoughtContent));
   }
 
