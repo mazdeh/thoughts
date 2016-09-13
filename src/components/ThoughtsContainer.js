@@ -8,8 +8,10 @@ import ThoughtForm from './ThoughtForm';
 class ThoughtsContainer extends Component {
   render() {
     const { dispatch, thoughts } = this.props;
+
     return (
       <span>
+        <button onClick={this.createNewEntry}>PLUS</button>
         <ThoughtForm {...this.props} dispatch={dispatch}/>
         <ThoughtList thoughts={thoughts} />
       </span>
@@ -18,7 +20,7 @@ class ThoughtsContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const { thoughts } = state.user;
+  const { thoughts } = state;
   return {
     thoughts
   }

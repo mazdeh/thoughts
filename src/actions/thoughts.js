@@ -9,3 +9,13 @@ export function saveThought(id, content) {
     }
   }
 }
+
+export function finishedEditing(id, content) {
+  return {
+    type: types.FINISHED_EDITING,
+    payload: {
+      id,
+      content
+    }
+  }
+}

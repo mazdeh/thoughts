@@ -3,13 +3,20 @@ import { Editor, EditorState, RichUtils } from 'draft-js';
 import { throttle } from 'underscore';
 import uuid from 'node-uuid';
 
-import { saveThought } from '../actions/user';
+import { finishedEditing, saveThought } from '../actions/thoughts';
+
+const styles = {
+  focoused: {
+    height: 500
+  }
+}
 
 export default class ThoughtForm extends Component {
   constructor() {
     super()
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    this.saveContent = throttle(this.saveContent, 10000);
+    this.doneEditing = this.doneEditing.bind(this);
+    // this.saveContent = throttle(this.saveContent, 10000);
 
     this.focus = () => this.refs.editor.focus();
 
@@ -21,8 +28,13 @@ export default class ThoughtForm extends Component {
     this.onChange = (editorState) => {
       this.setState({ editorState });
       const thoughtContent = editorState.getCurrentContent().toJS();
-      this.saveContent(thoughtContent);
+      // this.saveContent(thoughtContent);
     }
+  }
+
+  focus() {
+    this.refs.editor.focus();
+    // chnage style to full height/full screen
   }
 
   // cmd+b/i etc
@@ -37,9 +49,14 @@ export default class ThoughtForm extends Component {
 
   saveContent(thoughtContent) {
     const { dispatch } = this.props;
-    const id = this.state.id;
-    console.log('thoughtContent: ', thoughtContent);
+    const { id } = this.state;
     dispatch(saveThought(id, thoughtContent));
+  }
+
+  doneEditing() {
+    const { dispatch } = this.props;
+    const { id, editorState } = this.state;
+    dispatch(finishedEditing(id, editorState));
   }
 
   render() {
@@ -55,6 +72,7 @@ export default class ThoughtForm extends Component {
           placeholder="Start Writing..."
           ref="editor"
           />
+          <button onClick={this.doneEditing}>DONE</button>
       </div>
     )
   }

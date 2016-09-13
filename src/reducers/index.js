@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import user from './user';
+import thoughts from './thoughts';
 
 export default combineReducers({
-  user
+  thoughts
 });
