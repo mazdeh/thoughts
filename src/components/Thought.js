@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 
+import ThoughtForm from './ThoughtForm';
+
 export default class Thought extends Component {
   constructor(props) {
     super(props);
@@ -20,14 +22,11 @@ export default class Thought extends Component {
   }
 
   render() {
+    const { thought, dispatch } = this.props;
     return (
       <span className="row">
-
-      <Editor
-        className="editor"
-        editorState={this.state.editorState}
-        spellCheck={true}
-        />
+        <div>{thought.get('id')}</div>
+        <ThoughtForm thought={thought} dispatch={dispatch} />
       </span>
     )
   }

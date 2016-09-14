@@ -5,24 +5,26 @@ import uuid from 'node-uuid';
 
 import { finishedEditing, saveThought } from '../actions/thoughts';
 
-const styles = {
-  focoused: {
-    height: 500
-  }
-}
-
 export default class ThoughtForm extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    const { thought } = props;
+
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.doneEditing = this.doneEditing.bind(this);
     // this.saveContent = throttle(this.saveContent, 10000);
 
-    this.focus = () => this.refs.editor.focus();
+    this.focus = this.focus.bind(this);
+    this.onEscape = this.onEscape.bind(this);
+
+
+    if (thought) {
+      console.log('thought in form: ', thought.get('id'));
+    }
 
     this.state = {
-      id: uuid.v4(),
-      editorState: EditorState.createEmpty()
+      id: thought ? thought.get('id') : uuid.v4(),
+      editorState: thought ? thought.get('content') : EditorState.createEmpty()
     };
 
     this.onChange = (editorState) => {
@@ -34,7 +36,18 @@ export default class ThoughtForm extends Component {
 
   focus() {
     this.refs.editor.focus();
+    console.log('focus');
+    this.setState({
+      editing: true
+    })
     // chnage style to full height/full screen
+  }
+
+  onEscape() {
+    this.refs.editor.blur();
+    this.setState({
+      editing: false
+    })
   }
 
   // cmd+b/i etc
@@ -47,16 +60,20 @@ export default class ThoughtForm extends Component {
     return false;
   }
 
-  saveContent(thoughtContent) {
-    const { dispatch } = this.props;
-    const { id } = this.state;
-    dispatch(saveThought(id, thoughtContent));
-  }
+  // saveContent(thoughtContent) {
+  //   const { dispatch } = this.props;
+  //   const { id } = this.state;
+  //   dispatch(saveThought(id, thoughtContent));
+  // }
 
   doneEditing() {
     const { dispatch } = this.props;
     const { id, editorState } = this.state;
     dispatch(finishedEditing(id, editorState));
+    // this.setState({
+    //   id: uuid.v4(),
+    //   editorState: EditorState.createEmpty()
+    // })
   }
 
   render() {
@@ -68,11 +85,16 @@ export default class ThoughtForm extends Component {
           spellCheck={true}
           handleKeyCommand={this.handleKeyCommand}
           onChange={this.onChange}
+          onEscape={this.onEscape}
           onTab={this.onTab}
           placeholder="Start Writing..."
           ref="editor"
           />
-          <button onClick={this.doneEditing}>DONE</button>
+          {
+            this.state.editing ?
+              <button onClick={this.doneEditing}>DONE</button> :
+              <button>EDIT</button>
+          }
       </div>
     )
   }

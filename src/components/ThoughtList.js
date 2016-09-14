@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 import Thought from './Thought';
+import ThoughtForm from './ThoughtForm';
 
 export default class ThoughtList extends Component {
   render() {
-    const { thoughts } = this.props;
+    const { thoughts, dispatch } = this.props;
     return (
       <div>
+        <ThoughtForm thought={null} dispatch={dispatch}/>
         {
           thoughts ?
             thoughts.map((thought, key) => {
