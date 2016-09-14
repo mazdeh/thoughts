@@ -27,7 +27,6 @@ class ThoughtsContainer extends Component {
     return (
       <span>
         <button onClick={this.createNewThought}>PLUS</button>
-        {/*<ThoughtForm {...this.props} dispatch={dispatch}/>*/}
         <ThoughtList {...this.props} thoughts={thoughts} />
       </span>
     )

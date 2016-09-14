@@ -10,16 +10,6 @@ export function createThought(id, content) {
   }
 }
 
-export function saveThought(id, content) {
-  return {
-    type: types.SAVE_THOUGHT,
-    payload: {
-      id,
-      content
-    }
-  }
-}
-
 export function finishedEditing(id, content) {
   return {
     type: types.FINISHED_EDITING,
