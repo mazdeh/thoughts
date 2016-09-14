@@ -7,7 +7,6 @@ export default class Thought extends Component {
   constructor(props) {
     super(props);
     const { thought } = this.props;
-    console.log('thought: ', thought.toJS());
     this.state = {
       id: thought.get('id'),
       editorState: thought.get('content')
@@ -23,10 +22,18 @@ export default class Thought extends Component {
 
   render() {
     const { thought, dispatch } = this.props;
+    const content = thought.get('content');
+    const hasText = content.getCurrentContent().hasText();
     return (
       <span className="row">
-        <div>{thought.get('id')}</div>
-        <ThoughtForm thought={thought} dispatch={dispatch} />
+      {
+        hasText ?
+          <span>
+            <div>{thought.get('id')}</div>
+            <ThoughtForm thought={thought} dispatch={dispatch} />
+          </span> :
+          <ThoughtForm thought={thought} dispatch={dispatch} />
+      }
       </span>
     )
   }

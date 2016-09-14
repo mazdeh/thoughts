@@ -8,7 +8,6 @@ export default class ThoughtList extends Component {
     const { thoughts, dispatch } = this.props;
     return (
       <div>
-        <ThoughtForm thought={null} dispatch={dispatch}/>
         {
           thoughts ?
             thoughts.map((thought, key) => {
