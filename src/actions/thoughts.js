@@ -19,3 +19,13 @@ export function finishedEditing(id, content) {
     }
   }
 }
+
+export function setScore(id, content) {
+  return {
+    type: types.SET_SCORE,
+    payload: {
+      id,
+      content
+    }
+  }
+}

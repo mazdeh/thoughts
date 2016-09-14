@@ -1,6 +1,8 @@
 import * as types from '../constants/ActionTypes';
 import { Map, List } from 'immutable';
 
+import sentiment from 'sentiment';
+
 const initialState = List();
 
 export default function(state = initialState, action) {
@@ -9,6 +11,9 @@ export default function(state = initialState, action) {
       return _createThought(state, action);
     case types.FINISHED_EDITING:
       return _finishedEditing(state, action);
+    case types.SET_SCORE:
+      return _setScore(state, action);
+
   }
   return state;
 }
@@ -27,7 +32,8 @@ function _createThought(state, action) {
   return state.push(
     Map({
       id: action.payload.id,
-      content: action.payload.content
+      content: action.payload.content,
+      score: null
     })
   )
 }
@@ -42,10 +48,21 @@ function _finishedEditing(state, action) {
     return state.push(
       Map({
         id: action.payload.id,
-        content: action.payload.content
+        content: action.payload.content,
+        score: null
       })
     )
   }
 
   return state.updateIn([thoughtIndex, 'content'], content => action.payload.content);
+}
+
+function _setScore(state, action) {
+  const text = action.payload.content.getCurrentContent().getPlainText();
+  const score = sentiment(text);;
+  const thoughtIndex = state.findIndex((thoughtIndex) => {
+    return thoughtIndex.get('id') === action.payload.id;
+  })
+
+  return state.updateIn([thoughtIndex, 'score'], () => score);
 }

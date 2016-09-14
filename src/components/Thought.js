@@ -20,16 +20,21 @@ export default class Thought extends Component {
     })
   }
 
+  componentWillUpdate(nextProps) {
+    console.log('nextProps: ', nextProps.thought.toJS());
+  }
+
   render() {
     const { thought, dispatch } = this.props;
     const content = thought.get('content');
     const hasText = content.getCurrentContent().hasText();
+
     return (
       <span className="row">
       {
         hasText ?
           <span>
-            <div>{thought.get('id')}</div>
+            <span>{thought.get('score').comparative}</span>
             <ThoughtForm thought={thought} dispatch={dispatch} />
           </span> :
           <ThoughtForm thought={thought} dispatch={dispatch} />

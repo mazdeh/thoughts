@@ -1,5 +1,5 @@
 export const CREATE_THOUGHT = 'CREATE_THOUGHT';
 
-export const SAVE_THOUGHT = 'SAVE_THOUGHT';
+export const SET_SCORE = 'SET_SCORE';
 
 export const FINISHED_EDITING = 'FINISHED_EDITING';
