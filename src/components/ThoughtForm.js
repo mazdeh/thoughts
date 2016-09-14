@@ -17,11 +17,6 @@ export default class ThoughtForm extends Component {
     this.focus = this.focus.bind(this);
     this.onEscape = this.onEscape.bind(this);
 
-
-    if (thought) {
-      console.log('thought in form: ', thought.get('id'));
-    }
-
     this.state = {
       id: thought ? thought.get('id') : uuid.v4(),
       editorState: thought ? thought.get('content') : EditorState.createEmpty()
@@ -70,10 +65,6 @@ export default class ThoughtForm extends Component {
     const { dispatch } = this.props;
     const { id, editorState } = this.state;
     dispatch(finishedEditing(id, editorState));
-    // this.setState({
-    //   id: uuid.v4(),
-    //   editorState: EditorState.createEmpty()
-    // })
   }
 
   render() {

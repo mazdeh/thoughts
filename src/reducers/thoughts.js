@@ -38,7 +38,6 @@ export default function(state = initialState, action) {
 // }
 
 function _createThought(state, action) {
-
   // if there's an empty thought, don't create a new one
   const lastThought = state.last();
   if (lastThought) {
