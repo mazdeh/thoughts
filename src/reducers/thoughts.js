@@ -1,7 +1,12 @@
 import * as types from '../constants/ActionTypes';
+import { alchemyKey } from '../constants/auth';
 import { Map, List } from 'immutable';
 
 import sentiment from 'sentiment';
+
+import AlchemyAPI from 'alchemy-api';
+
+const alchemy = new AlchemyAPI(alchemyKey)
 
 const initialState = List();
 
@@ -59,7 +64,20 @@ function _finishedEditing(state, action) {
 
 function _setScore(state, action) {
   const text = action.payload.content.getCurrentContent().getPlainText();
-  const score = sentiment(text);;
+  const score = sentiment(text);
+
+  fetch('http://localhost:3000/alscore', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      text: text
+    })
+  }).then((response) => response.json())
+    .then((response) => console.log('response: ', response));
+
   const thoughtIndex = state.findIndex((thoughtIndex) => {
     return thoughtIndex.get('id') === action.payload.id;
   })
