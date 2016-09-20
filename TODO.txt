@@ -1,9 +1,0 @@
-1. user logged in -- we got something back from our server
-2. set the state
-
-  // state
-    { 
-      user: {
-        entries: []
-      }
-    }
