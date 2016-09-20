@@ -1,12 +1,8 @@
 import * as types from '../constants/ActionTypes';
-import { alchemyKey } from '../constants/auth';
 import { Map, List } from 'immutable';
 
 import sentiment from 'sentiment';
-
 import AlchemyAPI from 'alchemy-api';
-
-const alchemy = new AlchemyAPI(alchemyKey)
 
 const initialState = List();
 
@@ -73,10 +69,14 @@ function _setScore(state, action) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      text: text
+      id: action.payload.id,
+      contentObj: action.payload.content,
+      contentText: text
     })
   }).then((response) => response.json())
-    .then((response) => console.log('response: ', response));
+    .then((response) => {
+
+    });
 
   const thoughtIndex = state.findIndex((thoughtIndex) => {
     return thoughtIndex.get('id') === action.payload.id;

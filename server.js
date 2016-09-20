@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var auth = require('./src/constants/auth');
 var aws = require('aws-sdk');
+// var Map = require('immutable').Map;
 
 var app = express();
 aws.config.loadFromPath('./aws_config.json');
@@ -22,28 +23,32 @@ app.get('/save', function(req, res) {
 })
 
 app.post('/alscore', function(req, res) {
-  var text = req.body.text;
+  const id = req.body.id;
+  const contentObj = JSON.stringify(req.body.contentObj);
+  const contentText = req.body.contentText;
 
   var dbData = {
     TableName: 'thoughts',
     Item: {
-      id: {'S': 'vahid'},
-      text: {'S': text}
+      id:  id,
+      contentObj: contentObj
     }
   }
-  db.putItem(dbData, function(err, data) {
+
+  var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
+  docClient.put(dbData, function(err, data) {
+    console.log('dbData: ', dbData);
     if (err) {
-      console.log("couldn't save data to db.")
       console.log('err: ', err);
     } else {
       console.log("form data saved");
     }
   })
 
-  alchemy.emotions(text, {}, (err, response) => {
-    if (err) throw err;
-    res.json(JSON.stringify(response, null, 2));
-  })
+  // alchemy.emotions(contentText, {}, (err, response) => {
+  //   if (err) throw err;
+  //   res.json(JSON.stringify(response, null, 2));
+  // })
 })
 
 app.listen(PORT, function() {
