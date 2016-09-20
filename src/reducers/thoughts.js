@@ -78,6 +78,14 @@ function _setScore(state, action) {
 
     });
 
+
+  fetch('http://localhost:3000/thoughts')
+    .then((response) => response.json())
+    .then((response) => {
+      const thoughts = response.Responses.thoughts;
+      console.log('thoughts: ', JSON.parse(thoughts[0].contentObj));
+    })
+
   const thoughtIndex = state.findIndex((thoughtIndex) => {
     return thoughtIndex.get('id') === action.payload.id;
   })
