@@ -49,7 +49,7 @@ app.post('/thoughts/new', function(req, res) {
   const contentObj = JSON.stringify(req.body.contentObj);
   const contentText = req.body.contentText;
 
-  console.log('Storing a new thought with id: ', )
+  console.log('Storing a new thought with id: ' )
 
   var dbData = {
     TableName: 'thoughts',

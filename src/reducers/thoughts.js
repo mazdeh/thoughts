@@ -60,6 +60,13 @@ function _finishedEditing(state, action) {
 }
 
 function _getThoughts(state, action) {
+  fetch('http://localhost:3000/thoughts/1d195c08-7e00-40b1-abdc-885e3490b5ed')
+    .then((response) => response.json())
+    .then((response) => {
+      const thoughts = response.Responses.thoughts;
+      console.log('thoughts: ', JSON.parse(thoughts[0].contentObj));
+    })
+
   return state;
 }
 
@@ -82,14 +89,6 @@ function _setScore(state, action) {
     .then((response) => {
 
     });
-
-
-  fetch('http://localhost:3000/thoughts/1d195c08-7e00-40b1-abdc-885e3490b5ed')
-    .then((response) => response.json())
-    .then((response) => {
-      const thoughts = response.Responses.thoughts;
-      console.log('thoughts: ', JSON.parse(thoughts[0].contentObj));
-    })
 
   const thoughtIndex = state.findIndex((thoughtIndex) => {
     return thoughtIndex.get('id') === action.payload.id;

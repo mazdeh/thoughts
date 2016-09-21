@@ -6,12 +6,13 @@ import uuid from 'node-uuid';
 import ThoughtList from './ThoughtList';
 import ThoughtForm from './ThoughtForm';
 
-import { createThought, getThoughts } from '../actions/thoughts';
+import { createThought, setThoughts } from '../actions/thoughts';
 
 class ThoughtsContainer extends Component {
   constructor(props) {
     super(props);
     this.createNewThought = this.createNewThought.bind(this);
+    this.getThoughts = this.getThoughts.bind(this);
   }
 
   createNewThought() {
@@ -23,7 +24,7 @@ class ThoughtsContainer extends Component {
 
   getThoughts() {
     const { dispatch } = this.props;
-    dispatch(getThoughts());
+    dispatch(setThoughts());
   }
 
   render() {

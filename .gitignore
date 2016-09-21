@@ -1,4 +1,4 @@
 node_modules
 dist/*.js*
 src/constants/auth.js
-server/aws_config.json
+aws_config.json

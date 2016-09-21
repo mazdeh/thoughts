@@ -30,8 +30,14 @@ export function setScore(id, content) {
   }
 }
 
-export function getThoughts() {
-  return {
-    type: types.GET_THOUGHTS
+export function setThoughts() {
+  return function(dispatch) {
+    fetch('http://localhost:3000/thoughts/1d195c08-7e00-40b1-abdc-885e3490b5ed')
+      .then((response) => response.json())
+      .then((response) => {
+        const thoughts = response.Responses.thoughts;
+        console.log('thoughts: ', JSON.parse(thoughts[0].contentObj));
+        dispatch(_setThoughts(thoughts))
+      })
   }
 }
