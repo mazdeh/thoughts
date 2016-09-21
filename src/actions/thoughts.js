@@ -32,12 +32,25 @@ export function setScore(id, content) {
 
 export function setThoughts() {
   return function(dispatch) {
-    fetch('http://localhost:3000/thoughts/1d195c08-7e00-40b1-abdc-885e3490b5ed')
+    fetch('http://localhost:3000/thoughts/all')
       .then((response) => response.json())
       .then((response) => {
-        const thoughts = response.Responses.thoughts;
-        console.log('thoughts: ', JSON.parse(thoughts[0].contentObj));
-        dispatch(_setThoughts(thoughts))
+        const thoughts = response.Items;
+        const thoughtsCount = response.Count;
+        const scannedThoughts = response.ScannedCount;
+
+        thoughts.forEach((thought) => {
+          console.log('thought: ', thought);
+        })
+        // console.log('thoughts: ', JSON.parse(thoughts[0]));
+        // dispatch(_setThoughts(thoughts))
       })
+  }
+}
+
+function _setThoughts(thoughts) {
+  return {
+    type: types.SET_THOUGHTS,
+    thoughts
   }
 }

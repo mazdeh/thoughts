@@ -4,4 +4,4 @@ export const SET_SCORE = 'SET_SCORE';
 
 export const FINISHED_EDITING = 'FINISHED_EDITING';
 
-export const GET_THOUGHTS = 'GET_THOUGHTS';
+export const SET_THOUGHTS = 'SET_THOUGHTS';

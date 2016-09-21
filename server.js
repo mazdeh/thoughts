@@ -18,23 +18,15 @@ aws.config.loadFromPath('./aws_config.json');
 var db = new aws.DynamoDB({ region: 'us-west-2'});
 var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
 
-app.get('/thoughts/:id', function(req, res) {
-  const id = req.params.id;
-  console.log('Getting thought with id: ', id);
+app.get('/thoughts/all', function(req, res) {
+  // const id = req.params.id;
+  // console.log('Getting thought with id: ', id);
 
   var params = {
-    RequestItems: {
-      'thoughts' : {
-        Keys: [
-          {
-            id: id
-          }
-        ]
-      }
-    }
+    TableName: "thoughts"
   }
 
-  docClient.batchGet(params, function(err, data) {
+  docClient.scan(params, function(err, data) {
     if (err) {
       console.log('err: ', err);
     } else {
