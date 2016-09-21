@@ -3,3 +3,5 @@ export const CREATE_THOUGHT = 'CREATE_THOUGHT';
 export const SET_SCORE = 'SET_SCORE';
 
 export const FINISHED_EDITING = 'FINISHED_EDITING';
+
+export const GET_THOUGHTS = 'GET_THOUGHTS';

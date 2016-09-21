@@ -14,7 +14,8 @@ export default function(state = initialState, action) {
       return _finishedEditing(state, action);
     case types.SET_SCORE:
       return _setScore(state, action);
-
+    case types.GET_THOUGHTS:
+      return _getThoughts(state, action);
   }
   return state;
 }
@@ -58,11 +59,15 @@ function _finishedEditing(state, action) {
   return state.updateIn([thoughtIndex, 'content'], content => action.payload.content);
 }
 
+function _getThoughts(state, action) {
+  return state;
+}
+
 function _setScore(state, action) {
   const text = action.payload.content.getCurrentContent().getPlainText();
   const score = sentiment(text);
 
-  fetch('http://localhost:3000/alscore', {
+  fetch('http://localhost:3000/thoughts/new', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

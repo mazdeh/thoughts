@@ -29,3 +29,9 @@ export function setScore(id, content) {
     }
   }
 }
+
+export function getThoughts() {
+  return {
+    type: types.GET_THOUGHTS
+  }
+}
