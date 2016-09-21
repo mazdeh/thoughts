@@ -2,7 +2,6 @@ import * as types from '../constants/ActionTypes';
 import { Map, List } from 'immutable';
 
 import sentiment from 'sentiment';
-import AlchemyAPI from 'alchemy-api';
 
 const initialState = List();
 
@@ -14,8 +13,8 @@ export default function(state = initialState, action) {
       return _finishedEditing(state, action);
     case types.SET_SCORE:
       return _setScore(state, action);
-    case types.GET_THOUGHTS:
-      return _getThoughts(state, action);
+    case types.SET_THOUGHTS:
+      return _setThoughts(state, action);
   }
   return state;
 }
@@ -24,18 +23,19 @@ function _createThought(state, action) {
   // if there's an empty thought, don't create a new one
   const lastThought = state.last();
   if (lastThought) {
-    const content = lastThought.get('content')
-    const hasText = content.getCurrentContent().hasText();
+    const content = lastThought.get('contentObj')
+    const hasText = content.hasText();
     if (!hasText) {
       return state;
     }
   }
 
+  console.log('contentState in reducer: ', action.payload.contentState)
+
   return state.push(
     Map({
       id: action.payload.id,
-      content: action.payload.content,
-      score: null
+      contentObj: action.payload.contentState
     })
   )
 }
@@ -50,28 +50,21 @@ function _finishedEditing(state, action) {
     return state.push(
       Map({
         id: action.payload.id,
-        content: action.payload.content,
-        score: null
+        contentObj: action.payload.contentState
       })
     )
   }
 
-  return state.updateIn([thoughtIndex, 'content'], content => action.payload.content);
+  return state.updateIn([thoughtIndex, 'content'], content => action.payload.contentState);
 }
 
-function _getThoughts(state, action) {
-  fetch('http://localhost:3000/thoughts/1d195c08-7e00-40b1-abdc-885e3490b5ed')
-    .then((response) => response.json())
-    .then((response) => {
-      const thoughts = response.Responses.thoughts;
-      console.log('thoughts: ', JSON.parse(thoughts[0].contentObj));
-    })
-
+function _setThoughts(state, action) {
+  state = List(action.thoughts);
   return state;
 }
 
 function _setScore(state, action) {
-  const text = action.payload.content.getCurrentContent().getPlainText();
+  const text = action.payload.contentState.getPlainText();
   const score = sentiment(text);
 
   fetch('http://localhost:3000/thoughts/new', {
@@ -82,8 +75,7 @@ function _setScore(state, action) {
     },
     body: JSON.stringify({
       id: action.payload.id,
-      contentObj: action.payload.content,
-      contentText: text
+      contentState: action.payload.contentState
     })
   }).then((response) => response.json())
     .then((response) => {

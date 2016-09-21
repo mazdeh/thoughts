@@ -19,9 +19,6 @@ var db = new aws.DynamoDB({ region: 'us-west-2'});
 var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
 
 app.get('/thoughts/all', function(req, res) {
-  // const id = req.params.id;
-  // console.log('Getting thought with id: ', id);
-
   var params = {
     TableName: "thoughts"
   }
@@ -38,16 +35,15 @@ app.get('/thoughts/all', function(req, res) {
 
 app.post('/thoughts/new', function(req, res) {
   const id = req.body.id;
-  const contentObj = JSON.stringify(req.body.contentObj);
-  const contentText = req.body.contentText;
+  const contentState = req.body.contentObj;
 
-  console.log('Storing a new thought with id: ' )
+  console.log('Storing a new thought with id: ', id)
 
   var dbData = {
     TableName: 'thoughts',
     Item: {
       id:  id,
-      contentObj: contentObj
+      contentObj: contentState
     }
   }
 

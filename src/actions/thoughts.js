@@ -1,31 +1,32 @@
 import * as types from '../constants/ActionTypes';
+import { makeMap } from '../utils/makeMap';
 
-export function createThought(id, content) {
+export function createThought(id, contentState) {
   return {
     type: types.CREATE_THOUGHT,
     payload: {
       id,
-      content
+      contentState
     }
   }
 }
 
-export function finishedEditing(id, content) {
+export function finishedEditing(id, contentState) {
   return {
     type: types.FINISHED_EDITING,
     payload: {
       id,
-      content
+      contentState
     }
   }
 }
 
-export function setScore(id, content) {
+export function setScore(id, contentState) {
   return {
     type: types.SET_SCORE,
     payload: {
       id,
-      content
+      contentState
     }
   }
 }
@@ -35,15 +36,12 @@ export function setThoughts() {
     fetch('http://localhost:3000/thoughts/all')
       .then((response) => response.json())
       .then((response) => {
-        const thoughts = response.Items;
+        let thoughts = response.Items;
         const thoughtsCount = response.Count;
         const scannedThoughts = response.ScannedCount;
-
-        thoughts.forEach((thought) => {
-          console.log('thought: ', thought);
-        })
-        // console.log('thoughts: ', JSON.parse(thoughts[0]));
-        // dispatch(_setThoughts(thoughts))
+        thoughts = makeMap(thoughts);
+        console.log('thoughts: ', thoughts[0].toJS());
+        dispatch(_setThoughts(thoughts))
       })
   }
 }

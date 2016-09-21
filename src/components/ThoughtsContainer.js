@@ -18,8 +18,8 @@ class ThoughtsContainer extends Component {
   createNewThought() {
     const { dispatch } = this.props;
     const id = uuid.v4();
-    const content = EditorState.createEmpty();
-    dispatch(createThought(id, content));
+    const contentState = EditorState.createEmpty().getCurrentContent();
+    dispatch(createThought(id, contentState));
   }
 
   getThoughts() {

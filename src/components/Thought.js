@@ -9,14 +9,14 @@ export default class Thought extends Component {
     const { thought } = this.props;
     this.state = {
       id: thought.get('id'),
-      editorState: thought.get('content')
+      editorState: thought.get('contentObj')
     };
   }
 
   componentWillReceiveProps(nextProps) {
     const { thought } = nextProps;
     this.setState({
-      editorState: thought.get('content')
+      editorState: thought.get('contentObj')
     })
   }
 
@@ -26,8 +26,8 @@ export default class Thought extends Component {
 
   render() {
     const { thought, dispatch } = this.props;
-    const content = thought.get('content');
-    const hasText = content.getCurrentContent().hasText();
+    const content = thought.get('contentObj');
+    const hasText = content.hasText();
 
     return (
       <span className="row">

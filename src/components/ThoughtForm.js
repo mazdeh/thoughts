@@ -16,7 +16,7 @@ export default class ThoughtForm extends Component {
 
     this.state = {
       id: thought ? thought.get('id') : uuid.v4(),
-      editorState: thought ? thought.get('content') : EditorState.createEmpty()
+      editorState: thought ? EditorState.createWithContent(thought.get('contentObj')) : EditorState.createEmpty()
     };
 
     this.onChange = (editorState) => {
@@ -54,8 +54,8 @@ export default class ThoughtForm extends Component {
     this.setState({
       editing: false
     });
-    dispatch(finishedEditing(id, editorState));
-    dispatch(setScore(id, editorState));
+    dispatch(finishedEditing(id, editorState.getCurrentContent()));
+    dispatch(setScore(id, editorState.getCurrentContent()));
   }
 
   render() {
