@@ -39,7 +39,7 @@ export function setThoughts() {
         let thoughts = response.Items;
         const thoughtsCount = response.Count;
         const scannedThoughts = response.ScannedCount;
-        thoughts = makeMap(thoughts);
+        // thoughts = makeMap(thoughts);
         console.log('thoughts: ', thoughts[0].toJS());
         dispatch(_setThoughts(thoughts))
       })

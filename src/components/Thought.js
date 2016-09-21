@@ -26,7 +26,7 @@ export default class Thought extends Component {
 
   render() {
     const { thought, dispatch } = this.props;
-    const content = thought.get('contentObj');
+    const content = thought.get('contentState');
     const hasText = content.hasText();
 
     return (

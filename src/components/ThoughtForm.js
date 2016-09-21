@@ -16,7 +16,7 @@ export default class ThoughtForm extends Component {
 
     this.state = {
       id: thought ? thought.get('id') : uuid.v4(),
-      editorState: thought ? EditorState.createWithContent(thought.get('contentObj')) : EditorState.createEmpty()
+      editorState: thought ? EditorState.createWithContent(thought.get('contentState')) : EditorState.createEmpty()
     };
 
     this.onChange = (editorState) => {

@@ -43,16 +43,16 @@ app.post('/thoughts/new', function(req, res) {
     TableName: 'thoughts',
     Item: {
       id:  id,
-      contentObj: contentState
+      contentState: contentState
     }
   }
 
   docClient.put(dbData, function(err, data) {
     console.log('dbData: ', dbData);
     if (err) {
-      console.log('err: ', err);
+      console.log(err);
     } else {
-      console.log("form data saved");
+      console.log("Saved to db!");
     }
   })
 

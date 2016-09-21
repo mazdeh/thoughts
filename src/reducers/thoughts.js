@@ -23,7 +23,7 @@ function _createThought(state, action) {
   // if there's an empty thought, don't create a new one
   const lastThought = state.last();
   if (lastThought) {
-    const content = lastThought.get('contentObj')
+    const content = lastThought.get('contentState')
     const hasText = content.hasText();
     if (!hasText) {
       return state;
@@ -35,7 +35,7 @@ function _createThought(state, action) {
   return state.push(
     Map({
       id: action.payload.id,
-      contentObj: action.payload.contentState
+      contentState: action.payload.contentState
     })
   )
 }
@@ -50,7 +50,7 @@ function _finishedEditing(state, action) {
     return state.push(
       Map({
         id: action.payload.id,
-        contentObj: action.payload.contentState
+        contentState: action.payload.contentState
       })
     )
   }
