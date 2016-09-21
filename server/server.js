@@ -2,40 +2,38 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var auth = require('./src/constants/auth');
 var aws = require('aws-sdk');
-// var Map = require('immutable').Map;
+var AlchemyAPI = require('alchemy-api');
 
 var app = express();
-
-// Amazon stuff
-aws.config.loadFromPath('./aws_config.json');
-var db = new aws.DynamoDB({ region: 'us-west-2'});
-var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
-
 var PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(express.static('./dist'));
 
-var AlchemyAPI = require('alchemy-api');
 var alchemy = new AlchemyAPI(auth.alchemyKey);
 
-app.get('/save', function(req, res) {
-  console.log('do something with the request.')
-})
+// Amazon stuff
+aws.config.loadFromPath('./aws_config.json');
+// TODO: store region in a aws config file somewhere
+var db = new aws.DynamoDB({ region: 'us-west-2'});
+var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
 
-app.get('/thoughts', function(req, res) {
-  console.log('getting thoughts...');
+app.get('/thoughts/:id', function(req, res) {
+  const id = req.params.id;
+  console.log('Getting thought with id: ', id);
+
   var params = {
     RequestItems: {
       'thoughts' : {
         Keys: [
           {
-            id: '1d195c08-7e00-40b1-abdc-885e3490b5ed'
+            id: id
           }
         ]
       }
     }
   }
+
   docClient.batchGet(params, function(err, data) {
     if (err) {
       console.log('err: ', err);
@@ -46,10 +44,12 @@ app.get('/thoughts', function(req, res) {
   })
 })
 
-app.post('/alscore', function(req, res) {
+app.post('/thoughts/new', function(req, res) {
   const id = req.body.id;
   const contentObj = JSON.stringify(req.body.contentObj);
   const contentText = req.body.contentText;
+
+  console.log('Storing a new thought with id: ', )
 
   var dbData = {
     TableName: 'thoughts',
@@ -72,6 +72,10 @@ app.post('/alscore', function(req, res) {
   //   if (err) throw err;
   //   res.json(JSON.stringify(response, null, 2));
   // })
+})
+
+app.post('/thoughts/save/:id', function(req, res) {
+  console.log('Saving thought with id: ');
 })
 
 app.listen(PORT, function() {

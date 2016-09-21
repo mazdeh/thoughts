@@ -79,7 +79,7 @@ function _setScore(state, action) {
     });
 
 
-  fetch('http://localhost:3000/thoughts')
+  fetch('http://localhost:3000/thoughts/1d195c08-7e00-40b1-abdc-885e3490b5ed')
     .then((response) => response.json())
     .then((response) => {
       const thoughts = response.Responses.thoughts;
