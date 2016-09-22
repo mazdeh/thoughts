@@ -35,7 +35,7 @@ app.get('/thoughts/all', function(req, res) {
 
 app.post('/thoughts/new', function(req, res) {
   const id = req.body.id;
-  const contentState = req.body.contentState;
+  const rawContent = req.body.rawContent;
 
   console.log('Storing a new thought with id: ', id)
 
@@ -43,7 +43,7 @@ app.post('/thoughts/new', function(req, res) {
     TableName: 'thoughts',
     Item: {
       id:  id,
-      contentState: contentState
+      rawContent: rawContent
     }
   }
 

@@ -1,5 +1,7 @@
 import * as types from '../constants/ActionTypes';
 import { Map, List } from 'immutable';
+import { makeArray } from '../utils/makeMap';
+import { convertToRaw } from 'draft-js';
 
 import sentiment from 'sentiment';
 
@@ -30,8 +32,6 @@ function _createThought(state, action) {
     }
   }
 
-  console.log('contentState in reducer: ', action.payload.contentState)
-
   return state.push(
     Map({
       id: action.payload.id,
@@ -55,7 +55,7 @@ function _finishedEditing(state, action) {
     )
   }
 
-  return state.updateIn([thoughtIndex, 'content'], content => action.payload.contentState);
+  return state.updateIn([thoughtIndex, 'contentState'], contentState => action.payload.contentState);
 }
 
 function _setThoughts(state, action) {
@@ -64,9 +64,13 @@ function _setThoughts(state, action) {
 }
 
 function _setScore(state, action) {
-  const text = action.payload.contentState.getPlainText();
-  const score = sentiment(text);
+  // const text = action.payload.contentState.getPlainText();
+  const score = sentiment('vahid');
 
+  // console.log('getBlockMap: ', action.payload.contentState.getBlockMap().toJS());
+  const rawContent = convertToRaw(action.payload.contentState);
+
+  console.log('rawContent:', rawContent);
   fetch('http://localhost:3000/thoughts/new', {
     method: 'POST',
     headers: {
@@ -75,7 +79,7 @@ function _setScore(state, action) {
     },
     body: JSON.stringify({
       id: action.payload.id,
-      contentState: action.payload.contentState
+      rawContent: rawContent
     })
   }).then((response) => response.json())
     .then((response) => {

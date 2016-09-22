@@ -9,32 +9,31 @@ export default class Thought extends Component {
     const { thought } = this.props;
     this.state = {
       id: thought.get('id'),
-      editorState: thought.get('contentObj')
+      editorState: EditorState.createWithContent(thought.get('contentState'))
     };
   }
 
   componentWillReceiveProps(nextProps) {
     const { thought } = nextProps;
     this.setState({
-      editorState: thought.get('contentObj')
+      editorState: EditorState.createWithContent(thought.get('contentState'))
     })
   }
 
   componentWillUpdate(nextProps) {
-    console.log('nextProps: ', nextProps.thought.toJS());
+    // console.log('nextProps: ', nextProps.thought.toJS());
   }
 
   render() {
     const { thought, dispatch } = this.props;
-    const content = thought.get('contentState');
-    const hasText = content.hasText();
+    const contentState = this.state.editorState.getCurrentContent();
+    const hasText = contentState.hasText();
 
     return (
       <span className="row">
       {
         hasText ?
           <span>
-            <span>{thought.get('score').comparative}</span>
             <ThoughtForm thought={thought} dispatch={dispatch} />
           </span> :
           <ThoughtForm thought={thought} dispatch={dispatch} />

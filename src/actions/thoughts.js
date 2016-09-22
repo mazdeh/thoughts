@@ -1,5 +1,5 @@
 import * as types from '../constants/ActionTypes';
-import { makeMap } from '../utils/makeMap';
+import { convertToContentState } from '../utils/makeMap';
 
 export function createThought(id, contentState) {
   return {
@@ -39,8 +39,7 @@ export function setThoughts() {
         let thoughts = response.Items;
         const thoughtsCount = response.Count;
         const scannedThoughts = response.ScannedCount;
-        // thoughts = makeMap(thoughts);
-        console.log('thoughts: ', thoughts[0].toJS());
+        thoughts = convertToContentState(thoughts);
         dispatch(_setThoughts(thoughts))
       })
   }
