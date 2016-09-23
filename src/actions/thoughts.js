@@ -36,8 +36,8 @@ export function saveThought(id, contentState) {
         id: id,
         rawContent: rawContent
       })
-    }).then((response) => dispatch(types.SAVE_THOUGHT_SUCCESSFUL))
-      .catch((err) => dispatch(types.SAVE_THOUGHT_FAILED))
+    }).then((response) => dispatch({ type: types.SAVE_THOUGHT_SUCCESSFUL }))
+      .catch((err) => dispatch({ type: types.SAVE_THOUGHT_FAILED }))
   }
 }
 
@@ -53,8 +53,8 @@ export function deleteThought(id) {
     const url = 'http://localhost:3000/thoughts/delete/' + id;
     fetch(url, {
       method: 'POST'
-    }).then((response) => dispatch(types.DELETE_THOUGHT_SUCCESSFUL))
-      .catch((err) => dispatch(types.DELETE_THOUGHT_FAILED))
+    }).then((response) => dispatch({ type: types.DELETE_THOUGHT_SUCCESSFUL }))
+      .catch((err) => dispatch({ type: types.DELETE_THOUGHT_FAILED }))
   }
 }
 
