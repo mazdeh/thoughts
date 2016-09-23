@@ -77,8 +77,14 @@ function _setThoughts(state, action) {
 }
 
 function _deleteThought(state, action) {
-  console.log('deleting...')
-  return state;
+  const thoughtIndex = state.findIndex((thoughtIndex) => {
+    return thoughtIndex.get('id') === action.payload.id;
+  })
+  if (thoughtIndex === -1) {
+    console.log('No Item found with ID: ', action.payload.id);
+    return state;
+  }
+  return state.delete(thoughtIndex);
 }
 
 function _setScore(state, action) {
