@@ -89,11 +89,6 @@ app.post('/thoughts/update/:id', function(req, res) {
   // })
 })
 
-app.post('thoughts/update/:id', function(req, res) {
-  const id = req.params.id;
-  console.log('Updating thought with ID: ', id);
-})
-
 app.post('/thoughts/delete/:id', function(req, res) {
   const id = req.params.id;
   console.log('Deleting Thought with ID: ', id);
@@ -111,11 +106,6 @@ app.post('/thoughts/delete/:id', function(req, res) {
       res.sendStatus(200);
     }
   })
-})
-
-
-app.post('/thoughts/save/:id', function(req, res) {
-  console.log('Saving thought with id: ');
 })
 
 app.listen(PORT, function() {
