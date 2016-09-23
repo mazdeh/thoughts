@@ -17,6 +17,14 @@ export default function(state = initialState, action) {
     case types.SAVE_THOUGHT_FAILED:
       // roll back state, cause data was not save to db.
       return _stateRollBakc();
+
+    case types.DELETE_THOUGHT_REQUEST:
+      return _deleteThought(state, action);
+    case types.DELETE_THOUGHT_SUCCESSFUL:
+      return state;
+    case types.DELETE_THOUGHT_FAILED:
+      return _deleteRollBack()
+
     case types.SET_SCORE:
       return _setScore(state, action);
     case types.SET_THOUGHTS:
@@ -65,6 +73,11 @@ function _saveThought(state, action) {
 
 function _setThoughts(state, action) {
   state = List(action.thoughts);
+  return state;
+}
+
+function _deleteThought(state, action) {
+  console.log('deleting...')
   return state;
 }
 

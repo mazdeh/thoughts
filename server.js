@@ -62,6 +62,31 @@ app.post('/thoughts/new', function(req, res) {
   // })
 })
 
+app.post('thoughts/update/:id', function(req, res) {
+  const id = req.params.id;
+  console.log('Updating thought with ID: ', id);
+})
+
+app.post('/thoughts/delete/:id', function(req, res) {
+  const id = req.params.id;
+  console.log('Deleting Thought with ID: ', id);
+  const params = {
+    TableName: 'thoughts',
+    Key: {
+      id: id
+    }
+  }
+  docClient.delete(params, function(err, data) {
+    if (err) {
+      console.log(err)
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  })
+})
+
+
 app.post('/thoughts/save/:id', function(req, res) {
   console.log('Saving thought with id: ');
 })

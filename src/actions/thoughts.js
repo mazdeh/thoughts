@@ -41,6 +41,23 @@ export function saveThought(id, contentState) {
   }
 }
 
+export function deleteThought(id) {
+  return function(dispatch) {
+    dispatch({
+      type: types.DELETE_THOUGHT_REQUEST,
+      payload: {
+        id
+      }
+    })
+
+    const url = 'http://localhost:3000/thoughts/delete/' + id;
+    fetch(url, {
+      method: 'POST'
+    }).then((response) => dispatch(types.DELETE_THOUGHT_SUCCESSFUL))
+      .catch((err) => dispatch(types.DELETE_THOUGHT_FAILED))
+  }
+}
+
 export function setScore(id, contentState) {
   return {
     type: types.SET_SCORE,

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import uuid from 'node-uuid';
 
-import { saveThought, setScore } from '../actions/thoughts';
+import { saveThought, deleteThought, setScore } from '../actions/thoughts';
 
 export default class ThoughtForm extends Component {
   constructor(props) {
@@ -11,6 +11,7 @@ export default class ThoughtForm extends Component {
 
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.doneEditing = this.doneEditing.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
     this.focus = this.focus.bind(this);
     this.onEscape = this.onEscape.bind(this);
 
@@ -55,7 +56,13 @@ export default class ThoughtForm extends Component {
       editing: false
     });
     dispatch(saveThought(id, editorState.getCurrentContent()));
-    dispatch(setScore(id, editorState.getCurrentContent()));
+    // dispatch(setScore(id, editorState.getCurrentContent()));
+  }
+
+  deleteItem() {
+    const { dispatch } = this.props;
+    const { id } = this.state;
+    dispatch(deleteThought(id));
   }
 
   render() {
@@ -77,6 +84,7 @@ export default class ThoughtForm extends Component {
               <button onClick={this.doneEditing}>SAVE</button> :
               <button>EDIT</button>
           }
+          <button onClick={this.deleteItem}>DELETE</button>
       </div>
     )
   }
