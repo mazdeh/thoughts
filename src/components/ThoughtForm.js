@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import uuid from 'node-uuid';
 
-import { finishedEditing, setScore } from '../actions/thoughts';
+import { saveThought, setScore } from '../actions/thoughts';
 
 export default class ThoughtForm extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ export default class ThoughtForm extends Component {
     this.setState({
       editing: false
     });
-    dispatch(finishedEditing(id, editorState.getCurrentContent()));
+    dispatch(saveThought(id, editorState.getCurrentContent()));
     dispatch(setScore(id, editorState.getCurrentContent()));
   }
 

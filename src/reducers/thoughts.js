@@ -1,7 +1,5 @@
 import * as types from '../constants/ActionTypes';
 import { Map, List } from 'immutable';
-import { makeArray } from '../utils/makeMap';
-import { convertToRaw } from 'draft-js';
 
 import sentiment from 'sentiment';
 
@@ -11,8 +9,14 @@ export default function(state = initialState, action) {
   switch(action.type) {
     case types.CREATE_THOUGHT:
       return _createThought(state, action);
-    case types.FINISHED_EDITING:
-      return _finishedEditing(state, action);
+    case types.SAVE_THOUGHT_REQUEST:
+      // return updated state here
+      return _saveThought(state, action);
+    case types.SAVE_THOUGHT_SUCCESSFUL:
+      return state;
+    case types.SAVE_THOUGHT_FAILED:
+      // roll back state, cause data was not save to db.
+      return _stateRollBakc();
     case types.SET_SCORE:
       return _setScore(state, action);
     case types.SET_THOUGHTS:
@@ -35,12 +39,13 @@ function _createThought(state, action) {
   return state.push(
     Map({
       id: action.payload.id,
-      contentState: action.payload.contentState
+      contentState: action.payload.contentState,
+      dateCreated: Date.now()
     })
   )
 }
 
-function _finishedEditing(state, action) {
+function _saveThought(state, action) {
   const thoughtIndex = state.findIndex((thoughtIndex) => {
     return thoughtIndex.get('id') === action.payload.id;
   })
@@ -66,25 +71,6 @@ function _setThoughts(state, action) {
 function _setScore(state, action) {
   // const text = action.payload.contentState.getPlainText();
   const score = sentiment('vahid');
-
-  // console.log('getBlockMap: ', action.payload.contentState.getBlockMap().toJS());
-  const rawContent = convertToRaw(action.payload.contentState);
-
-  console.log('rawContent:', rawContent);
-  fetch('http://localhost:3000/thoughts/new', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      id: action.payload.id,
-      rawContent: rawContent
-    })
-  }).then((response) => response.json())
-    .then((response) => {
-
-    });
 
   const thoughtIndex = state.findIndex((thoughtIndex) => {
     return thoughtIndex.get('id') === action.payload.id;

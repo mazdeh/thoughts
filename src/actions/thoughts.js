@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import { convertToContentState } from '../utils/makeMap';
+import { convertToRaw } from 'draft-js';
 
 export function createThought(id, contentState) {
   return {
@@ -11,13 +12,32 @@ export function createThought(id, contentState) {
   }
 }
 
-export function finishedEditing(id, contentState) {
-  return {
-    type: types.FINISHED_EDITING,
-    payload: {
-      id,
-      contentState
-    }
+export function saveThought(id, contentState) {
+  return function(dispatch) {
+    // Optimistic Updates
+    // dispatch action to save thought in Redux store
+    dispatch({
+      type: types.SAVE_THOUGHT_REQUEST,
+      payload: {
+        id,
+        contentState
+      }
+    })
+
+    // attempting Save to DB
+    const rawContent = convertToRaw(contentState);
+    fetch('http://localhost:3000/thoughts/new', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: id,
+        rawContent: rawContent
+      })
+    }).then((response) => dispatch(types.SAVE_THOUGHT_SUCCESSFUL))
+      .catch((err) => dispatch(types.SAVE_THOUGHT_FAILED))
   }
 }
 
