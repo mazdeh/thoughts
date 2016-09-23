@@ -6,13 +6,12 @@ import uuid from 'node-uuid';
 import ThoughtList from './ThoughtList';
 import ThoughtForm from './ThoughtForm';
 
-import { createThought, setThoughts } from '../actions/thoughts';
+import { createThought } from '../actions/thoughts';
 
 class ThoughtsContainer extends Component {
   constructor(props) {
     super(props);
     this.createNewThought = this.createNewThought.bind(this);
-    this.getThoughts = this.getThoughts.bind(this);
   }
 
   createNewThought() {
@@ -22,18 +21,12 @@ class ThoughtsContainer extends Component {
     dispatch(createThought(id, contentState));
   }
 
-  getThoughts() {
-    const { dispatch } = this.props;
-    dispatch(setThoughts());
-  }
-
   render() {
     const { dispatch, thoughts } = this.props;
 
     return (
       <span>
         <button onClick={this.createNewThought}>PLUS</button>
-        <button onClick={this.getThoughts}>Get thoughts</button>
         <ThoughtList {...this.props} thoughts={thoughts} />
       </span>
     )
