@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import uuid from 'node-uuid';
+import { throttle } from 'underscore';
 
 import { saveThought, deleteThought, setScore } from '../actions/thoughts';
 
 export default class ThoughtForm extends Component {
   constructor(props) {
     super(props)
-    const { thought } = props;
+    const { dispatch, thought } = props;
 
-    this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.doneEditing = this.doneEditing.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+
+    this.autoSave = throttle(this.autoSave, 10000);
+
+    this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.focus = this.focus.bind(this);
     this.onEscape = this.onEscape.bind(this);
 
@@ -22,7 +26,14 @@ export default class ThoughtForm extends Component {
 
     this.onChange = (editorState) => {
       this.setState({ editorState });
+      // this.autoSave();
     }
+  }
+
+  autoSave() {
+    const { id, editorState } = this.state;
+    const { dispatch } = this.props;
+    dispatch(saveThought(id, editorState.getCurrentContent()))
   }
 
   focus() {

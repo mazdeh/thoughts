@@ -30,7 +30,7 @@ export default class Thought extends Component {
     const hasText = contentState.hasText();
 
     return (
-      <span className="row">
+      <span>
       {
         hasText ?
           <span>

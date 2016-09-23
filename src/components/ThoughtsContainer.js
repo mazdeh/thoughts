@@ -6,7 +6,7 @@ import uuid from 'node-uuid';
 import ThoughtList from './ThoughtList';
 import ThoughtForm from './ThoughtForm';
 
-import { createThought } from '../actions/thoughts';
+import { createThought, saveThought } from '../actions/thoughts';
 
 class ThoughtsContainer extends Component {
   constructor(props) {

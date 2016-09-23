@@ -7,10 +7,15 @@ const initialState = List();
 
 export default function(state = initialState, action) {
   switch(action.type) {
-    case types.CREATE_THOUGHT:
+    case types.CREATE_THOUGHT_REQUEST:
       return _createThought(state, action);
+    case types.CREATE_THOUGHT_SUCCESSFUL:
+      return state;
+    case types.CREATE_THOUGHT_FAILED:
+      return _createRollBack(state, action);
+
+
     case types.SAVE_THOUGHT_REQUEST:
-      // return updated state here
       return _saveThought(state, action);
     case types.SAVE_THOUGHT_SUCCESSFUL:
       return state;
@@ -40,10 +45,11 @@ function _createThought(state, action) {
     const content = lastThought.get('contentState')
     const hasText = content.hasText();
     if (!hasText) {
+      console.log('you do come here');
       return state;
     }
   }
-
+  console.log('it shouldnt get here')
   return state.push(
     Map({
       id: action.payload.id,
@@ -88,7 +94,6 @@ function _deleteThought(state, action) {
 }
 
 function _setScore(state, action) {
-  // const text = action.payload.contentState.getPlainText();
   const score = sentiment('vahid');
 
   const thoughtIndex = state.findIndex((thoughtIndex) => {

@@ -33,25 +33,52 @@ app.get('/thoughts/all', function(req, res) {
   })
 })
 
-app.post('/thoughts/new', function(req, res) {
-  const id = req.body.id;
-  const rawContent = req.body.rawContent;
+app.post('/thoughts/new/:id', function(req, res) {
+  const id = req.params.id;
+  console.log('Creating a new Thought Item with ID: ', id);
 
-  console.log('Storing a new thought with id: ', id)
-
-  var dbData = {
+  var params = {
     TableName: 'thoughts',
     Item: {
-      id:  id,
-      rawContent: rawContent
+      id: id
     }
   }
 
-  docClient.put(dbData, function(err, data) {
-    console.log('dbData: ', dbData);
+  docClient.put(params, function(err, data) {
     if (err) {
+      res.sendStatus(500);
       console.log(err);
     } else {
+      res.sendStatus(200);
+      console.log('Created new Thought');
+    }
+  })
+
+})
+
+app.post('/thoughts/update/:id', function(req, res) {
+  const id = req.params.id;
+  const rawContent = req.body.rawContent;
+
+  console.log('Updating thought with id: ', id)
+
+  var params = {
+    TableName: 'thoughts',
+    Key: {
+      id:  id
+    },
+    UpdateExpression: "set rawContent = :r",
+    ExpressionAttributeValues: {
+      ":r": rawContent
+    }
+  }
+
+  docClient.update(params, function(err, data) {
+    if (err) {
+      res.sendStatus(500);
+      console.log(err);
+    } else {
+      res.sendStatus(200);
       console.log("Saved to db!");
     }
   })

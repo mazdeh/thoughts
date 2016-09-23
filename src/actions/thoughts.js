@@ -1,21 +1,27 @@
 import * as types from '../constants/ActionTypes';
-import { convertToContentState } from '../utils/makeMap';
+import { convertToContentState } from '../utils/util';
 import { convertToRaw } from 'draft-js';
 
 export function createThought(id, contentState) {
-  return {
-    type: types.CREATE_THOUGHT,
-    payload: {
-      id,
-      contentState
-    }
+  return function(dispatch) {
+    dispatch({
+      type: types.CREATE_THOUGHT_REQUEST,
+      payload: {
+        id: id,
+        contentState: contentState
+      }
+    });
+
+    const url = 'http://localhost:3000/thoughts/new/' + id;
+    fetch(url, {
+      method: 'POST',
+    }).then((response) => dispatch({ type: types.CREATE_THOUGHT_SUCCESSFUL }))
+      .catch((err) => dispatch({ type: types.CREATE_THOUGHT_FAILED }))
   }
 }
 
 export function saveThought(id, contentState) {
   return function(dispatch) {
-    // Optimistic Updates
-    // dispatch action to save thought in Redux store
     dispatch({
       type: types.SAVE_THOUGHT_REQUEST,
       payload: {
@@ -24,16 +30,15 @@ export function saveThought(id, contentState) {
       }
     })
 
-    // attempting Save to DB
     const rawContent = convertToRaw(contentState);
-    fetch('http://localhost:3000/thoughts/new', {
+    const url = 'http://localhost:3000/thoughts/update/' + id;
+    fetch(url, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        id: id,
         rawContent: rawContent
       })
     }).then((response) => dispatch({ type: types.SAVE_THOUGHT_SUCCESSFUL }))
