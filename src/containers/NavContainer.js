@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 export default class Nav extends Component {
-  constructor() {
-  }
 
   login(e) {
     // pass in form data to server
