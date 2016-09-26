@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var auth = require('./src/constants/auth');
+var uuid = require('node-uuid');
 var aws = require('aws-sdk');
 var AlchemyAPI = require('alchemy-api');
 
@@ -18,6 +19,35 @@ aws.config.loadFromPath('./aws_config.json');
 var db = new aws.DynamoDB({ region: 'us-west-2'});
 var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
 
+app.post('/users/new', function(req, res) {
+  const email = req.body.email;
+  const username = req.body.username;
+  const password = req.body.password;
+
+  console.log('email, ', email, username, password);
+
+  var params = {
+    TableName: "users",
+    Item: {
+      id: uuid.v4(),
+      email: email,
+      username: username,
+      password: password
+    }
+  }
+
+  docClient.put(params, function(err, data) {
+    if (err) {
+      console.log('err: ', err);
+      res.sendStatus(500);
+    } else {
+      console.log('data: ', data);
+      res.send(data);
+    }
+  })
+})
+
+
 app.get('/thoughts/all', function(req, res) {
   var params = {
     TableName: "thoughts"
@@ -26,6 +56,7 @@ app.get('/thoughts/all', function(req, res) {
   docClient.scan(params, function(err, data) {
     if (err) {
       console.log('err: ', err);
+      res.sendStatus(500);
     } else {
       console.log('data: ', data);
       res.send(data);
