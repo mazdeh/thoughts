@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import { registerUser } from '../actions/users';
 
 export default class Register extends Component {
   constructor(props) {
     super(props);
     this.register = this.register.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePassChange = this.handlePassChange.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
 
     this.state = {
       email: '',
@@ -15,22 +14,17 @@ export default class Register extends Component {
     }
   }
 
-  handleEmailChange(e) {
-    this.setState({ email: e.target.value })
-  }
-
-  handleUsernameChange(e) {
-    this.setState({ username: e.target.value })
-  }
-
-  handlePassChange(e) {
-    this.setState({ password: e.target.value })
+  handleFieldChange(e) {
+    this.setState({ [e.target.name]: e.target.value })
   }
 
   register(e) {
+    // redirect to post-signup page?!
     e.preventDefault();
-    console.log('form inputs?')
-    console.log('e: ', this.state);
+    const { dispatch } = this.props;
+    const userInfo = this.state;
+    console.log('userInfo: ', userInfo);
+    dispatch(registerUser(userInfo));
   }
 
   render() {
@@ -42,26 +36,29 @@ export default class Register extends Component {
           <label>
             Email:
             <input
+              name="email"
               type="text"
               placeholder="email"
               value={this.state.email}
-              onChange={this.handleEmailChange} />
+              onChange={this.handleFieldChange} />
           </label>
           <label>
             Username:
             <input
+              name="username"
               type="text"
               placeholder="username"
               value={this.state.username}
-              onChange={this.handleUsernameChange} />
+              onChange={this.handleFieldChange} />
           </label>
           <label>
             Password:
             <input
+              name="password"
               type="text"
               placeholder="password"
               value={this.state.password}
-              onChange={this.handlePassChange} />
+              onChange={this.handleFieldChange} />
           </label>
 
           <button type="submit">Sign Up!</button>
