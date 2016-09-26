@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { registerUser } from '../actions/users';
 
-export default class Register extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
     this.register = this.register.bind(this);
@@ -67,3 +68,11 @@ export default class Register extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    state
+  }
+}
+
+export default connect(mapStateToProps)(Register);

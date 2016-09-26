@@ -11,7 +11,7 @@ export function registerUser(userInfo) {
       }
     })
 
-    fetch(apiURL + '/users/new', {
+    fetch(apiUrl + '/users/new', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -21,8 +21,8 @@ export function registerUser(userInfo) {
         email: userInfo.email,
         username: userInfo.username,
         password: userInfo.password
-      }).then((response) => dispatch({ type: types.REGISTRATION_SUCCESSFUL }))
-        .catch((err) => dispatch({ type: types.REGISTRATION_FAILED }))
-    })
+      })
+    }).then((response) => dispatch({ type: types.REGISTRATION_SUCCESSFUL }))
+      .catch((err) => dispatch({ type: types.REGISTRATION_FAILED }))
   }
 }
