@@ -1,6 +1,7 @@
 .nav-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   padding: 10px;
   position: fixed;
   background-color: white;
@@ -19,4 +20,15 @@
   font-family: 'Open Sans', monospace;
   font-weight: bold;
   font-size: 30pt;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  margin-right: 50px;
+
+  label {
+    margin-bottom: 5px;
+  }
 }
