@@ -1,4 +1,5 @@
 var aws = require('aws-sdk');
+var uuid = require('node-uuid');
 aws.config.loadFromPath('./aws_config.json');
 
 var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
