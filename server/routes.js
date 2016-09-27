@@ -1,20 +1,18 @@
-var aws = require('aws-sdk');
 var uuid = require('node-uuid');
 var dbCreds = require('./dbcreds');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://' + dbCreds.user + ':' + dbCreds.pass +'@ds041536.mlab.com:41536/thoughts-db')
-
-
 var Thought = require('./models/thought');
-// var bcrypt = require('bcrypt');
-
-aws.config.loadFromPath('./aws_config.json');
-var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
 
 module.exports = function(app, passport) {
+  app.get('/', function(req, res) {
+    console.log('Im here')
+  })
+
   app.post('/users/new', passport.authenticate('local-signup', {
-    successRedirect: '/blah',
-    failureRedirect: '/register'
+    successRedirect: '/',
+    failureRedirect: '/register',
+    failureFlash: true
   }))
 
   app.get('/thoughts/all', function(req, res) {
@@ -23,24 +21,10 @@ module.exports = function(app, passport) {
         console.log('ERR: ', err);
         res.sendStatus(500);
       } else {
-        console.log('Thoughts: ', thoughts);
+        console.log('Thoughts Received!');
         res.send(thoughts);
       }
     })
-
-    // var params = {
-    //   TableName: "thoughts"
-    // }
-    //
-    // docClient.scan(params, function(err, data) {
-    //   if (err) {
-    //     console.log('err: ', err);
-    //     res.sendStatus(500);
-    //   } else {
-    //     console.log('data: ', data);
-    //     res.send(data);
-    //   }
-    // })
   })
 
   app.post('/thoughts/new/:id', function(req, res) {

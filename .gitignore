@@ -1,5 +1,4 @@
 node_modules
 dist/*.js*
 src/constants/auth.js
-aws_config.json
 server/dbcreds.js
