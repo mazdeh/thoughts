@@ -1,7 +1,6 @@
-var dbCreds = require('../dbcreds');
+// var dbCreds = require('../dbcreds');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
-mongoose.connect('mongodb://' + dbCreds.user + ':' + dbCreds.pass +'@ds041536.mlab.com:41536/thoughts-db')
 
 // https://github.com/Automattic/mongoose/issues/4291
 mongoose.Promise = global.Promise;

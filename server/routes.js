@@ -1,9 +1,12 @@
 var aws = require('aws-sdk');
 var uuid = require('node-uuid');
-// var bcrypt = require('bcrypt');
+var dbCreds = require('./dbcreds');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://' + dbCreds.user + ':' + dbCreds.pass +'@ds041536.mlab.com:41536/thoughts-db')
 
-// TODO: hopefully move to separate file passport.js
-// var passport = require('passport');
+
+var Thought = require('./models/thought');
+// var bcrypt = require('bcrypt');
 
 aws.config.loadFromPath('./aws_config.json');
 var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
@@ -35,49 +38,30 @@ module.exports = function(app, passport) {
     const id = req.params.id;
     console.log('Creating a new Thought Item with ID: ', id);
 
-    var params = {
-      TableName: 'thoughts',
-      Item: {
-        id: id
-      }
-    }
+    var newThought = new Thought();
+    newThought.id = id;
 
-    docClient.put(params, function(err, data) {
+    newThought.save(function(err) {
       if (err) {
+        console.log('ERR Could not save new thought: ', err);
         res.sendStatus(500);
-        console.log(err);
       } else {
         res.sendStatus(200);
-        console.log('Created new Thought');
+        console.log('Saved Thought with ID: ', id, 'to db!');
       }
     })
-
   })
 
   app.post('/thoughts/update/:id', function(req, res) {
     const id = req.params.id;
     const rawContent = req.body.rawContent;
-
     console.log('Updating thought with id: ', id)
 
-    var params = {
-      TableName: 'thoughts',
-      Key: {
-        id:  id
-      },
-      UpdateExpression: "set rawContent = :r",
-      ExpressionAttributeValues: {
-        ":r": rawContent
-      }
-    }
-
-    docClient.update(params, function(err, data) {
+    Thought.update({ 'id': id }, {$set: { rawContent: rawContent }}, function(err) {
       if (err) {
-        res.sendStatus(500);
-        console.log(err);
+        console.log('ERR: ', err);
       } else {
-        res.sendStatus(200);
-        console.log("Saved to db!");
+        console.log('updated');
       }
     })
 
