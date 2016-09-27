@@ -12,26 +12,35 @@ aws.config.loadFromPath('./aws_config.json');
 var docClient = new aws.DynamoDB.DocumentClient({ region: 'us-west-2' });
 
 module.exports = function(app, passport) {
-  // saves to mongodb
   app.post('/users/new', passport.authenticate('local-signup', {
     successRedirect: '/blah',
     failureRedirect: '/register'
   }))
 
   app.get('/thoughts/all', function(req, res) {
-    var params = {
-      TableName: "thoughts"
-    }
-
-    docClient.scan(params, function(err, data) {
+    Thought.find({}, function(err, thoughts) {
       if (err) {
-        console.log('err: ', err);
+        console.log('ERR: ', err);
         res.sendStatus(500);
       } else {
-        console.log('data: ', data);
-        res.send(data);
+        console.log('Thoughts: ', thoughts);
+        res.send(thoughts);
       }
     })
+
+    // var params = {
+    //   TableName: "thoughts"
+    // }
+    //
+    // docClient.scan(params, function(err, data) {
+    //   if (err) {
+    //     console.log('err: ', err);
+    //     res.sendStatus(500);
+    //   } else {
+    //     console.log('data: ', data);
+    //     res.send(data);
+    //   }
+    // })
   })
 
   app.post('/thoughts/new/:id', function(req, res) {
@@ -56,12 +65,14 @@ module.exports = function(app, passport) {
     const id = req.params.id;
     const rawContent = req.body.rawContent;
     console.log('Updating thought with id: ', id)
-
+    console.log('entityMap: ', rawContent);
     Thought.update({ 'id': id }, {$set: { rawContent: rawContent }}, function(err) {
       if (err) {
         console.log('ERR: ', err);
+        res.sendStatus(500);
       } else {
-        console.log('updated');
+        res.sendStatus(200);
+        console.log('Updated Thought with ID: ', id);
       }
     })
 

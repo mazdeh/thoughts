@@ -78,10 +78,10 @@ export function setThoughts() {
     fetch('http://localhost:3000/thoughts/all')
       .then((response) => response.json())
       .then((response) => {
-        let thoughts = response.Items;
-        const thoughtsCount = response.Count;
-        const scannedThoughts = response.ScannedCount;
-        thoughts = convertToContentState(thoughts);
+        // let thoughts = response.Items;
+        // const thoughtsCount = response.Count;
+        // const scannedThoughts = response.ScannedCount;
+        const thoughts = convertToContentState(response);
         dispatch(_setThoughts(thoughts))
       })
   }
