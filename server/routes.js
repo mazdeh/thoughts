@@ -1,7 +1,7 @@
 var uuid = require('node-uuid');
-var db = require('./dbcreds');
-var mongoose = require('mongoose');
-mongoose.connect(db.url);
+// var db = require('./dbcreds');
+// var mongoose = require('mongoose');
+// mongoose.connect(db.url);
 var Thought = require('./models/thought');
 
 module.exports = function(app, passport) {
@@ -14,7 +14,9 @@ module.exports = function(app, passport) {
   app.post('/users/login',
     passport.authenticate('local-login'),
     function(req, res) {
-      console.log('login was successfule: ', req.user);
+      // req.session.username = req.user.local.username;
+      console.log('Successfully logged in.');
+      res.status(200).send(req.user);
     }
   )
 

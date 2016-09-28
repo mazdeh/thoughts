@@ -3,8 +3,13 @@ var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var sessionStore = require('connect-mongo')(session);
 var auth = require('./../src/constants/auth');
 // var AlchemyAPI = require('alchemy-api');
+
+var db = require('./dbcreds');
+var mongoose = require('mongoose');
+mongoose.connect(db.url);
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -15,9 +20,16 @@ app.use(cookieParser());
 app.use(bodyParser.json()); // for parsing application/json
 app.use(express.static(__dirname + '/../dist'));
 
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({
+  secret: 'keyboardcat',
+  store: new sessionStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+  })
+}));
+
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 // var alchemy = new AlchemyAPI(auth.alchemyKey);
 

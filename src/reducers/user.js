@@ -3,7 +3,7 @@ import { Map } from 'immutable';
 
 const initialState = Map({
   authed: false,
-  username: null
+  user: null
 });
 
 export default function(state = initialState, action) {
@@ -17,9 +17,9 @@ export default function(state = initialState, action) {
 }
 
 function _loginUser(state, action) {
-  console.log('trying to log the user in, on the clinet.');
+  const { user } = action.payload;
   return state.merge({
     'authed': true,
-    'username': 'vahid'
+    'user': user
   });
 }
