@@ -16,6 +16,7 @@ class App extends Component {
     return (
       <span className="container">
         <NavContainer />
+        {this.props.children}
         <ThoughtsContainer />
       </span>
     )

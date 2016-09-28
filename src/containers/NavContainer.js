@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
-import UserCenter from '../components/UserCenter';
+import UserNav from '../components/UserNav';
 
 class Nav extends Component {
   render() {
@@ -9,13 +9,13 @@ class Nav extends Component {
       <div className="nav-container">
         <span className="nav-logo">T</span>
 
-        <UserCenter {...this.props} />
+        <UserNav {...this.props} />
       </div>
     )
   }
 }
 
-mapStateToProps(state) {
+function mapStateToProps(state) {
   const { user } = state;
   return {
     user

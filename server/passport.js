@@ -51,13 +51,15 @@ module.exports = function(passport) {
   passport.use('local-login', new LocalStrategy({
     passReqToCallback: true
   }, function(req, username, password, done) {
-    User.findOne({ 'local.username ': username }, function(err, user) {
+    console.log('username: ', username);
+    User.findOne({ 'local.username': username }, function(err, user) {
       if (err) {
         console.log('ERR: ', err);
         return done(err);
       }
 
       if(!user) {
+        console.log('cant find user/')
         return done(null, false);
       }
 
@@ -70,11 +72,5 @@ module.exports = function(passport) {
     })
 
   }
-
-
   ))
-
-
-
-
 }

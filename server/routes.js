@@ -11,10 +11,12 @@ module.exports = function(app, passport) {
     failureFlash: true
   }))
 
-  app.post('users/login', passport.authenticate('local-login', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  }))
+  app.post('/users/login',
+    passport.authenticate('local-login'),
+    function(req, res) {
+      console.log('login was successfule: ', req.user);
+    }
+  )
 
   app.get('/thoughts/all', function(req, res) {
     Thought.find({}, function(err, thoughts) {
