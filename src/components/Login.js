@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
+import { loginUser } from '../actions/users';
 import Form from './Form';
 
 export default class Login extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.login = this.login.bind(this);
-  //   this.handleFieldChange = this.handleFieldChange.bind(this);
-  //
-  //   this.state = {
-  //     email: '',
-  //     username: '',
-  //     password: ''
-  //   }
-  // }
+  constructor(props) {
+    super(props);
+    this.login = this.login.bind(this);
+  }
 
-  login(e) {
-    // pass in form data to server
+  login(state, e) {
     e.preventDefault();
-    console.log('log me in');
+    const { dispatch } = this.props;
+    const userInfo = state;
+    dispatch(loginUser(userInfo));
   }
 
   render() {
