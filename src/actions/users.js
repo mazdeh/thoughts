@@ -18,7 +18,6 @@ export function registerUser(userInfo) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: userInfo.email,
         username: userInfo.username,
         password: userInfo.password
       })

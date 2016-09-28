@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 
 var userSchema = mongoose.Schema({
   local: {
-    email: String,
+    username: String,
     password: String
   }
 })

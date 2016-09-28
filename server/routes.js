@@ -1,18 +1,19 @@
 var uuid = require('node-uuid');
-var dbCreds = require('./dbcreds');
+var db = require('./dbcreds');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://' + dbCreds.user + ':' + dbCreds.pass +'@ds041536.mlab.com:41536/thoughts-db')
+mongoose.connect(db.url);
 var Thought = require('./models/thought');
 
 module.exports = function(app, passport) {
-  app.get('/', function(req, res) {
-    console.log('Im here')
-  })
-
   app.post('/users/new', passport.authenticate('local-signup', {
     successRedirect: '/',
     failureRedirect: '/register',
     failureFlash: true
+  }))
+
+  app.post('users/login', passport.authenticate('local-login', {
+    successRedirect: '/',
+    failureRedirect: '/login'
   }))
 
   app.get('/thoughts/all', function(req, res) {
@@ -66,20 +67,16 @@ module.exports = function(app, passport) {
     // })
   })
 
-  app.post('/thoughts/delete/:id', function(req, res) {
+  app.delete('/thoughts/delete/:id', function(req, res) {
     const id = req.params.id;
     console.log('Deleting Thought with ID: ', id);
-    const params = {
-      TableName: 'thoughts',
-      Key: {
-        id: id
-      }
-    }
-    docClient.delete(params, function(err, data) {
-      if (err) {
-        console.log(err)
+
+    Thought.remove({ 'id': id }, function(err) {
+      if(err) {
+        console.log('ERR: ', err);
         res.sendStatus(500);
       } else {
+        console.log('Deleted Thought with ID: ', id);
         res.sendStatus(200);
       }
     })

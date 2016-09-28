@@ -5,6 +5,7 @@ import { BrowserRouter, Match, Miss } from 'react-router';
 
 import App from './containers/App';
 import NoMatch from './containers/NoMatch';
+import Login from './components/Login';
 import Register from './components/Register';
 import configureStore from './stores/configureStore';
 
@@ -16,6 +17,7 @@ ReactDOM.render(
       <div>
         <Match exactly pattern="/" component={App} />
         <Match pattern="/register" component={Register} />
+        <Match pattern="/login" component={Login} />
         <Miss component={NoMatch} />
       </div>
     </BrowserRouter>

@@ -57,7 +57,7 @@ export function deleteThought(id) {
 
     const url = 'http://localhost:3000/thoughts/delete/' + id;
     fetch(url, {
-      method: 'POST'
+      method: 'DELETE'
     }).then((response) => dispatch({ type: types.DELETE_THOUGHT_SUCCESSFUL }))
       .catch((err) => dispatch({ type: types.DELETE_THOUGHT_FAILED }))
   }
