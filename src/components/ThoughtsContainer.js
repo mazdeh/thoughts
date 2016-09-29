@@ -23,7 +23,7 @@ class ThoughtsContainer extends Component {
 
   render() {
     const { dispatch, thoughts } = this.props;
-
+    console.log('thuoghts in container: ', thoughts.toJS());
     return (
       <span>
         <button onClick={this.createNewThought}>PLUS</button>

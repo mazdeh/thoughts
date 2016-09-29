@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
-import uuid from 'node-uuid';
+// import uuid from 'node-uuid';
 import { throttle } from 'underscore';
 
 import { saveThought, deleteThought, setScore } from '../actions/thoughts';
@@ -13,27 +13,29 @@ export default class ThoughtForm extends Component {
     this.doneEditing = this.doneEditing.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
 
-    this.autoSave = throttle(this.autoSave, 10000);
+    this.autoSave = throttle(this.autoSave, 10 * 1000);
 
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.focus = this.focus.bind(this);
     this.onEscape = this.onEscape.bind(this);
 
     this.state = {
-      id: thought ? thought.get('id') : uuid.v4(),
-      editorState: thought ? EditorState.createWithContent(thought.get('contentState')) : EditorState.createEmpty()
+      id: thought.get('id'),
+      editorState: EditorState.createWithContent(thought.get('contentState'))
     };
 
     this.onChange = (editorState) => {
       this.setState({ editorState });
-      // this.autoSave();
+      this.autoSave();
     }
   }
 
   autoSave() {
     const { id, editorState } = this.state;
     const { dispatch } = this.props;
-    dispatch(saveThought(id, editorState.getCurrentContent()))
+    if (editorState.getCurrentContent().hasText()) {
+      dispatch(saveThought(id, editorState.getCurrentContent()))
+    }
   }
 
   focus() {
@@ -73,12 +75,15 @@ export default class ThoughtForm extends Component {
   deleteItem() {
     const { dispatch } = this.props;
     const { id } = this.state;
+    console.log('id: ', id);
     dispatch(deleteThought(id));
   }
 
   render() {
+    const {id } = this.state;
     return (
-      <div className="row" onClick={this.focus}>
+      <div className="row">
+        <span>ID: {id}</span>
         <Editor
           className="editor"
           editorState={this.state.editorState}
@@ -90,11 +95,7 @@ export default class ThoughtForm extends Component {
           placeholder="Start Writing..."
           ref="editor"
           />
-          {
-            this.state.editing ?
-              <button onClick={this.doneEditing}>SAVE</button> :
-              <button>EDIT</button>
-          }
+          <button onClick={this.doneEditing}>SAVE</button>
           <button onClick={this.deleteItem}>DELETE</button>
       </div>
     )

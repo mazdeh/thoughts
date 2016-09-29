@@ -26,18 +26,11 @@ export default class Thought extends Component {
 
   render() {
     const { thought, dispatch } = this.props;
-    const contentState = this.state.editorState.getCurrentContent();
-    const hasText = contentState.hasText();
 
+    console.log('thought in Thought: ', thought.toJS());
     return (
       <span>
-      {
-        hasText ?
-          <span>
-            <ThoughtForm thought={thought} dispatch={dispatch} />
-          </span> :
-          <ThoughtForm thought={thought} dispatch={dispatch} />
-      }
+        <ThoughtForm thought={thought} dispatch={dispatch} />
       </span>
     )
   }

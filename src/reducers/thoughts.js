@@ -7,12 +7,8 @@ const initialState = List();
 
 export default function(state = initialState, action) {
   switch(action.type) {
-    case types.CREATE_THOUGHT_REQUEST:
+    case types.CREATE_THOUGHT:
       return _createThought(state, action);
-    case types.CREATE_THOUGHT_SUCCESSFUL:
-      return state;
-    case types.CREATE_THOUGHT_FAILED:
-      return _createRollBack(state, action);
 
 
     case types.SAVE_THOUGHT_REQUEST:
@@ -45,23 +41,21 @@ function _createThought(state, action) {
     const content = lastThought.get('contentState')
     const hasText = content.hasText();
     if (!hasText) {
-      console.log('you do come here');
       return state;
     }
   }
-  console.log('it shouldnt get here')
+
   return state.push(
     Map({
       id: action.payload.id,
-      contentState: action.payload.contentState,
-      dateCreated: Date.now()
+      contentState: action.payload.contentState
     })
   )
 }
 
 function _saveThought(state, action) {
-  const thoughtIndex = state.findIndex((thoughtIndex) => {
-    return thoughtIndex.get('id') === action.payload.id;
+  const thoughtIndex = state.findIndex((thought) => {
+    return thought.get('id') === action.payload.id;
   })
 
   // if no entry with action.id exists, add a new entry
@@ -83,21 +77,23 @@ function _setThoughts(state, action) {
 }
 
 function _deleteThought(state, action) {
-  const thoughtIndex = state.findIndex((thoughtIndex) => {
-    return thoughtIndex.get('id') === action.payload.id;
+  console.log('id: ', action.payload.id);
+  const thoughtIndex = state.findIndex((thought) => {
+    return thought.get('id') === action.payload.id;
   })
   if (thoughtIndex === -1) {
     console.log('No Item found with ID: ', action.payload.id);
     return state;
   }
+
   return state.delete(thoughtIndex);
 }
 
 function _setScore(state, action) {
   const score = sentiment('vahid');
 
-  const thoughtIndex = state.findIndex((thoughtIndex) => {
-    return thoughtIndex.get('id') === action.payload.id;
+  const thoughtIndex = state.findIndex((thought) => {
+    return thought.get('id') === action.payload.id;
   })
 
   return state.updateIn([thoughtIndex, 'score'], () => score);

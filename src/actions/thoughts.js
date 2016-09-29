@@ -3,20 +3,12 @@ import { convertToContentState } from '../utils/util';
 import { convertToRaw } from 'draft-js';
 
 export function createThought(id, contentState) {
-  return function(dispatch) {
-    dispatch({
-      type: types.CREATE_THOUGHT_REQUEST,
-      payload: {
-        id: id,
-        contentState: contentState
-      }
-    });
-
-    const url = 'http://localhost:3000/thoughts/new/' + id;
-    fetch(url, {
-      method: 'POST',
-    }).then((response) => dispatch({ type: types.CREATE_THOUGHT_SUCCESSFUL }))
-      .catch((err) => dispatch({ type: types.CREATE_THOUGHT_FAILED }))
+  return {
+    type: types.CREATE_THOUGHT,
+    payload: {
+      id: id,
+      contentState: contentState
+    }
   }
 }
 
