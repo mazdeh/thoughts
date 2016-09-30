@@ -45,7 +45,7 @@ export function loginUser(userInfo) {
         username: userInfo.username,
         password: userInfo.password
       })
-    }).then((response) => response.json())
+    }).then((response) => response)
       .then((response) => dispatch({
       type: types.LOGIN_SUCCESSFUL,
       payload: {

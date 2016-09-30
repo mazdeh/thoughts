@@ -51,7 +51,6 @@ module.exports = function(passport) {
   passport.use('local-login', new LocalStrategy({
     passReqToCallback: true
   }, function(req, username, password, done) {
-    console.log('username: ', username);
     User.findOne({ 'local.username': username }, function(err, user) {
       if (err) {
         console.log('ERR: ', err);
@@ -59,12 +58,12 @@ module.exports = function(passport) {
       }
 
       if(!user) {
-        console.log('cant find user/')
+        console.log('Cannot find user!')
         return done(null, false);
       }
 
       if(!user.validPassword(password)) {
-        console.log('Invalid pass');
+        console.log('Invalid pass.');
         return done(null, false);
       }
 

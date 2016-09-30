@@ -15,7 +15,6 @@ module.exports = function(app, passport) {
     passport.authenticate('local-login'),
     function(req, res) {
       req.session.username = req.user.local.username;
-      console.log('Successfully logged in.');
       res.status(200).send(req.user.username);
     }
   )
@@ -95,7 +94,7 @@ module.exports = function(app, passport) {
 
   app.delete('/thoughts/delete/:id', function(req, res) {
     const id = req.params.id;
-    
+
     Thought.remove({ 'id': id }, function(err) {
       if(err) {
         console.log('ERR: ', err);

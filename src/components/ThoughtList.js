@@ -7,7 +7,7 @@ export default class ThoughtList extends Component {
   render() {
     const { thoughts, dispatch } = this.props;
     // componenet Key's -- i.e. <ThoughtForm key={} />
-    // should be a unique identifier of the component and
+    // should be unique identifiers of the component and
     // not a mapping of the index in the array.
     // if the component has a uuid, always assign key the uuid
     return (

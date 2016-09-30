@@ -80,10 +80,8 @@ export default class ThoughtForm extends Component {
   }
 
   render() {
-    const {id } = this.state;
     return (
       <div className="row">
-        <span>ID: {id}</span>
         <Editor
           className="editor"
           editorState={this.state.editorState}
