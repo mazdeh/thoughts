@@ -75,13 +75,17 @@ export default class ThoughtForm extends Component {
   deleteItem() {
     const { dispatch } = this.props;
     const { id } = this.state;
-    console.log('id: ', id);
     dispatch(deleteThought(id));
   }
 
   render() {
+    const thought = this.props.thought.toJS();
     return (
       <div className="row">
+        <small>
+          Date created: {thought.dateCreated} <br></br>
+          Last Saved: {thought.lastSaved}
+        </small>
         <Editor
           className="editor"
           editorState={this.state.editorState}

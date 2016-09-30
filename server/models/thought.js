@@ -7,7 +7,9 @@ mongoose.Promise = global.Promise;
 var thoughtSchema = mongoose.Schema({
   userId: String,
   id: String,
-  rawContent: Object
+  rawContent: Object,
+  lastSaved: Date,
+  dateCreated: Date
 })
 
 module.exports = mongoose.model('Thought', thoughtSchema);

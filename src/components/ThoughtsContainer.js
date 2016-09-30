@@ -33,7 +33,7 @@ class ThoughtsContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const { thoughts } = state;
+  const { thoughts } = state.user;
   return {
     thoughts
   }

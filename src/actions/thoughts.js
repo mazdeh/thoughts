@@ -7,7 +7,9 @@ export function createThought(id, contentState) {
     type: types.CREATE_THOUGHT,
     payload: {
       id: id,
-      contentState: contentState
+      contentState: contentState,
+      dateCreated: Date(),
+      lastSaved: Date()
     }
   }
 }
@@ -17,8 +19,9 @@ export function saveThought(id, contentState) {
     dispatch({
       type: types.SAVE_THOUGHT_REQUEST,
       payload: {
-        id,
-        contentState
+        id: id,
+        contentState: contentState,
+        lastSaved: Date()
       }
     })
 
@@ -70,9 +73,6 @@ export function setThoughts() {
     fetch('http://localhost:3000/thoughts/all')
       .then((response) => response.json())
       .then((response) => {
-        // let thoughts = response.Items;
-        // const thoughtsCount = response.Count;
-        // const scannedThoughts = response.ScannedCount;
         const thoughts = convertToContentState(response);
         dispatch(_setThoughts(thoughts))
       })

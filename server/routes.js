@@ -31,26 +31,26 @@ module.exports = function(app, passport) {
     })
   })
 
-  app.post('/thoughts/new/:id', function(req, res) {
-    const id = req.params.id;
-    const rawContent = req.body.rawContent;
-    console.log('Creating a new Thought Item with ID: ', id);
-
-    var newThought = new Thought();
-    newThought.id = id;
-    console.log('rawContent: ', rawContent);
-    newThought.rawContent = rawContent;
-
-    newThought.save(function(err) {
-      if (err) {
-        console.log('ERR Could not save new thought: ', err);
-        res.sendStatus(500);
-      } else {
-        res.sendStatus(200);
-        console.log('Saved Thought with ID: ', id, 'to db!');
-      }
-    })
-  })
+  // app.post('/thoughts/new/:id', function(req, res) {
+  //   const id = req.params.id;
+  //   const rawContent = req.body.rawContent;
+  //   console.log('Creating a new Thought Item with ID: ', id);
+  //
+  //   var newThought = new Thought();
+  //   newThought.id = id;
+  //   console.log('rawContent: ', rawContent);
+  //   newThought.rawContent = rawContent;
+  //
+  //   newThought.save(function(err) {
+  //     if (err) {
+  //       console.log('ERR Could not save new thought: ', err);
+  //       res.sendStatus(500);
+  //     } else {
+  //       res.sendStatus(200);
+  //       console.log('Saved Thought with ID: ', id, 'to db!');
+  //     }
+  //   })
+  // })
 
   app.post('/thoughts/update/:id', function(req, res) {
     const id = req.params.id;
@@ -66,6 +66,9 @@ module.exports = function(app, passport) {
         var newThought = new Thought();
         newThought.id = id;
         newThought.rawContent = rawContent;
+        newThought.dateCreated = Date.now();
+        newThought.lastSaved = new Date();
+
         newThought.save(function(err) {
           if (err) {
             console.log('ERR Could not save new thought to db: ', err)
@@ -79,6 +82,7 @@ module.exports = function(app, passport) {
 
       else {
         thought.rawContent = rawContent;
+        thought.lastSaved = new Date();
         thought.save(function(err) {
           if (err) {
             console.log('ERR Could not update Thought ', err)

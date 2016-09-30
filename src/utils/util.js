@@ -8,10 +8,10 @@ export function convertToContentState(thoughts) {
       thought.rawContent['entityMap'] = {};
     }
     const contentState = convertFromRaw(thought.rawContent);
-    const thoughtForRedux = Map({
-      id: thought.id,
+    const thoughtMap = Map(thought);
+    const thoughtForRedux = thoughtMap.merge({
       contentState: contentState
-    })
+    });
     thoughtsForRedux.push(thoughtForRedux);
   })
   return thoughtsForRedux;

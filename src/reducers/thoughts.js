@@ -48,7 +48,9 @@ function _createThought(state, action) {
   return state.push(
     Map({
       id: action.payload.id,
-      contentState: action.payload.contentState
+      contentState: action.payload.contentState,
+      dateCreated: action.payload.dateCreated,
+      lastSaved: action.payload.lastSaved
     })
   )
 }
@@ -63,12 +65,18 @@ function _saveThought(state, action) {
     return state.push(
       Map({
         id: action.payload.id,
-        contentState: action.payload.contentState
+        contentState: action.payload.contentState,
+        lastSaved: action.payload.lastSaved
       })
     )
   }
 
-  return state.updateIn([thoughtIndex, 'contentState'], contentState => action.payload.contentState);
+  const { contentState, lastSaved } = action.payload;
+
+  return state.updateIn([thoughtIndex], thought => thought.merge({
+    contentState: contentState,
+    lastSaved: lastSaved
+  }))
 }
 
 function _setThoughts(state, action) {
