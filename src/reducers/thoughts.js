@@ -77,7 +77,6 @@ function _setThoughts(state, action) {
 }
 
 function _deleteThought(state, action) {
-  console.log('id: ', action.payload.id);
   const thoughtIndex = state.findIndex((thought) => {
     return thought.get('id') === action.payload.id;
   })
