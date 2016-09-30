@@ -16,3 +16,13 @@ export function convertToContentState(thoughts) {
   })
   return thoughtsForRedux;
 }
+
+export function byCreatedDate(a, b) {
+  if (a.get('dateCreated') > b.get('dateCreated')) {
+    return -1;
+  }
+  if (a.get('dateCreated') < b.get('dateCreated')) {
+    return 1;
+  }
+  return 0;
+}
