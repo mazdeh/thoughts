@@ -2,7 +2,6 @@ import * as types from '../constants/ActionTypes';
 import { Map } from 'immutable';
 
 const initialState = Map({
-  authed: false,
   user: null
 });
 
@@ -18,8 +17,5 @@ export default function(state = initialState, action) {
 
 function _loginUser(state, action) {
   const { user } = action.payload;
-  return state.merge({
-    'authed': true,
-    'user': user
-  });
+  return state.updateIn(['auth, authed'], authed => true);
 }

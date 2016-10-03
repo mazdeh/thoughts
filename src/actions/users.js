@@ -1,5 +1,8 @@
+import { browserHistory } from 'react-router';
+
 import * as types from '../constants/ActionTypes';
 import { apiUrl } from '../constants/serverAPI';
+import { setThoughts } from '../actions/thoughts';
 
 export function registerUser(userInfo) {
   return function(dispatch) {
@@ -46,12 +49,17 @@ export function loginUser(userInfo) {
         password: userInfo.password
       })
     }).then((response) => response)
-      .then((response) => dispatch({
-      type: types.LOGIN_SUCCESSFUL,
-      payload: {
-        user: response
-      }
-    }))
+      .then((response) => {
+        dispatch({
+          type: types.LOGIN_SUCCESSFUL,
+          payload: {
+            user: response
+          }
+      });
+      dispatch({ type: types.AUTH_TOGGLE, payload: { authed: true }})
+      dispatch(setThoughts());
+      browserHistory.push('/');
+    })
       .catch((err) => dispatch({ type: types.LOGIN_FAILED }))
   }
 }

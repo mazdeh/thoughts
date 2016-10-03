@@ -16,8 +16,9 @@ class Nav extends Component {
 }
 
 function mapStateToProps(state) {
-  const { user } = state;
+  const { auth, user } = state;
   return {
+    auth,
     user
   }
 }

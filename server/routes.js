@@ -15,11 +15,13 @@ module.exports = function(app, passport) {
     passport.authenticate('local-login'),
     function(req, res) {
       req.session.username = req.user.local.username;
+      console.log('sess: ', req.session);
       res.status(200).send(req.user.username);
     }
   )
 
   app.get('/thoughts/all', function(req, res) {
+    console.log('req.session: ', req.session);
     Thought.find({}, function(err, thoughts) {
       if (err) {
         console.log('ERR: ', err);

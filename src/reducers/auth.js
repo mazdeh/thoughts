@@ -7,8 +7,8 @@ const initialState = Map({
 
 export default function(state = initialState, action) {
   switch(action.type) {
-    case types.AUTH:
-      return state.update('authed', v => action.payload.authed)
+    case types.AUTH_TOGGLE:
+      return state.update('authed', v => v = action.payload.authed)
   }
   return state;
 }

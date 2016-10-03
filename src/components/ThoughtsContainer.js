@@ -25,7 +25,7 @@ class ThoughtsContainer extends Component {
     const { dispatch, thoughts } = this.props;
     return (
       <span>
-        <button onClick={this.createNewThought}>PLUS</button>
+        {/*<button onClick={this.createNewThought}>PLUS</button>*/}
         <ThoughtList {...this.props} thoughts={thoughts} />
       </span>
     )

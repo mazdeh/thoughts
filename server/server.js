@@ -24,7 +24,7 @@ app.use(session({
   secret: 'keyboardcat',
   store: new sessionStore({
     mongooseConnection: mongoose.connection,
-    ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+    ttl: 24 * 60 * 60 // = a day
   })
 }));
 
