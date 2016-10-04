@@ -58,19 +58,10 @@ export function deleteThought(id) {
   }
 }
 
-export function setScore(id, contentState) {
-  return {
-    type: types.SET_SCORE,
-    payload: {
-      id,
-      contentState
-    }
-  }
-}
-
-export function setThoughts() {
+export function setThoughts(id) {
   return function(dispatch) {
-    fetch('http://localhost:3000/thoughts/all')
+    const url = 'http://localhost:3000/user/' + id +'/thoughts';
+    fetch(url)
       .then((response) => response.json())
       .then((response) => {
         const thoughts = convertToContentState(response);

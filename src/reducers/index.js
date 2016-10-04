@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import thoughts from './thoughts';
-import user from './user';
+// import user from './user';
 import profile from './profile';
 import auth from './auth';
 

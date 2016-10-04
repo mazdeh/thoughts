@@ -3,6 +3,7 @@ var uuid = require('node-uuid');
 // var mongoose = require('mongoose');
 // mongoose.connect(db.url);
 var Thought = require('./models/thought');
+var User = require('./models/user');
 
 module.exports = function(app, passport) {
   app.post('/users/new', passport.authenticate('local-signup', {
@@ -14,24 +15,41 @@ module.exports = function(app, passport) {
   app.post('/users/login',
     passport.authenticate('local-login'),
     function(req, res) {
-      req.session.username = req.user.local.username;
-      console.log('sess: ', req.session);
-      res.status(200).send(req.user.username);
+      res.status(200).send(req.user);
     }
   )
 
-  app.get('/thoughts/all', function(req, res) {
-    console.log('req.session: ', req.session);
-    Thought.find({}, function(err, thoughts) {
+  app.get('/user/:id/thoughts', function(req, res) {
+    const userId = req.params.id;
+    console.log('user id: ', userId);
+    User.find({ 'userId': userId }, function(err, user) {
       if (err) {
-        console.log('ERR: ', err);
-        res.sendStatus(500);
-      } else {
-        console.log('Thoughts Received!');
-        res.send(thoughts);
+        console.log('DB ERR: ', err);
+      }
+
+      if(!user) {
+        console.log('No User Found!');
+      }
+
+      else {
+        console.log('found the user');
       }
     })
   })
+
+
+  // app.get('/thoughts/all', function(req, res) {
+  //   console.log('req.session: ', req.session);
+  //   Thought.find({}, function(err, thoughts) {
+  //     if (err) {
+  //       console.log('ERR: ', err);
+  //       res.sendStatus(500);
+  //     } else {
+  //       console.log('Thoughts Received!');
+  //       res.send(thoughts);
+  //     }
+  //   })
+  // })
 
   // app.post('/thoughts/new/:id', function(req, res) {
   //   const id = req.params.id;
@@ -57,6 +75,13 @@ module.exports = function(app, passport) {
   app.post('/thoughts/update/:id', function(req, res) {
     const id = req.params.id;
     const rawContent = req.body.rawContent;
+
+    const Sessions = db.sessions;
+
+    Sessions.findOne({ 'session.passport.user': req.session.id }, function(err, user) {
+
+    })
+
 
     Thought.findOne({ 'id': id }, function(err, thought) {
       if (err) {

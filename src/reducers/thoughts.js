@@ -26,8 +26,6 @@ export default function(state = initialState, action) {
     case types.DELETE_THOUGHT_FAILED:
       return _deleteRollBack()
 
-    case types.SET_SCORE:
-      return _setScore(state, action);
     case types.SET_THOUGHTS:
       return _setThoughts(state, action);
   }
@@ -94,14 +92,4 @@ function _deleteThought(state, action) {
   }
 
   return state.delete(thoughtIndex);
-}
-
-function _setScore(state, action) {
-  const score = sentiment('vahid');
-
-  const thoughtIndex = state.findIndex((thought) => {
-    return thought.get('id') === action.payload.id;
-  })
-
-  return state.updateIn([thoughtIndex, 'score'], () => score);
 }

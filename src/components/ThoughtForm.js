@@ -3,7 +3,7 @@ import { Editor, EditorState, RichUtils } from 'draft-js';
 // import uuid from 'node-uuid';
 import { throttle } from 'underscore';
 
-import { saveThought, deleteThought, setScore } from '../actions/thoughts';
+import { saveThought, deleteThought } from '../actions/thoughts';
 
 export default class ThoughtForm extends Component {
   constructor(props) {

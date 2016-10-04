@@ -17,5 +17,7 @@ export default function(state = initialState, action) {
 
 function _loginUser(state, action) {
   const { user } = action.payload;
-  return state.updateIn(['auth, authed'], authed => true);
+  return state.merge({
+    'user': user
+  });
 }

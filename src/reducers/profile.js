@@ -1,18 +1,16 @@
 import * as types from '../constants/ActionTypes';
 import { Map } from 'immutable';
 
-const initialState = Map({
-  username: null
-});
+const initialState = Map({});
 
 export default function(state = initialState, action) {
   switch(action.type) {
-    case types.SET_USER_PROFILE:
+    case types.LOGIN_SUCCESSFUL:
       return _setUserProfile(state, action);
   }
   return state;
 }
 
 function _setUserProfile(state, action) {
-  return state;
+  return action.payload.user
 }

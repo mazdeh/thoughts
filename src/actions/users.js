@@ -48,8 +48,9 @@ export function loginUser(userInfo) {
         username: userInfo.username,
         password: userInfo.password
       })
-    }).then((response) => response)
+    }).then((response) => response.json())
       .then((response) => {
+        console.log('response: ', response)
         dispatch({
           type: types.LOGIN_SUCCESSFUL,
           payload: {
@@ -57,7 +58,11 @@ export function loginUser(userInfo) {
           }
       });
       dispatch({ type: types.AUTH_TOGGLE, payload: { authed: true }})
-      dispatch(setThoughts());
+
+      // user object now contains an array of all thought id's
+      // get the thoughts from the thought collection when needed
+      const userId = response._id;
+      dispatch(setThoughts(userId));
       browserHistory.push('/');
     })
       .catch((err) => dispatch({ type: types.LOGIN_FAILED }))

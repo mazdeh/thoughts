@@ -9,23 +9,10 @@ import ThoughtForm from './ThoughtForm';
 import { createThought, saveThought } from '../actions/thoughts';
 
 class ThoughtsContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.createNewThought = this.createNewThought.bind(this);
-  }
-
-  createNewThought() {
-    const { dispatch } = this.props;
-    const id = uuid.v4();
-    const contentState = EditorState.createEmpty().getCurrentContent();
-    dispatch(createThought(id, contentState));
-  }
-
   render() {
     const { dispatch, thoughts } = this.props;
     return (
       <span>
-        {/*<button onClick={this.createNewThought}>PLUS</button>*/}
         <ThoughtList {...this.props} thoughts={thoughts} />
       </span>
     )

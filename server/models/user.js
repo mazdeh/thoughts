@@ -1,4 +1,3 @@
-// var dbCreds = require('../dbcreds');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
@@ -9,7 +8,8 @@ var userSchema = mongoose.Schema({
   local: {
     username: String,
     password: String
-  }
+  },
+  thoughts: [String] // _id of thought
 })
 
 // generating a hash
