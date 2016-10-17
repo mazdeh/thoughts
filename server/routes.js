@@ -1,20 +1,33 @@
 var uuid = require('node-uuid');
-// var db = require('./dbcreds');
-// var mongoose = require('mongoose');
-// mongoose.connect(db.url);
 var Thought = require('./models/thought');
 var User = require('./models/user');
 
 module.exports = function(app, passport) {
-  app.post('/users/new', passport.authenticate('local-signup', {
+  app.get('/test', function(req, res) {
+    req.session.name = 'vahidvahid';
+    console.log('req.session: ', req.session);
+    res.end()
+  })
+
+  app.get('/testagain', function(req, res) {
+    console.log('req.session --- ---: ', req.session);
+    req.session.name = 'richrich';
+    res.end();
+  })
+
+  app.post('/user/new', passport.authenticate('local-signup', {
     successRedirect: '/',
     failureRedirect: '/register',
     failureFlash: true
   }))
 
-  app.post('/users/login',
-    passport.authenticate('local-login'),
+  app.post('/user/login',
+    passport.authenticate('local-login', {
+      failureRedirect: '/'
+    }),
     function(req, res) {
+      req.session.userId = req.user._id;
+      console.log('req.session', req.session);
       res.status(200).send(req.user);
     }
   )
@@ -72,15 +85,17 @@ module.exports = function(app, passport) {
   //   })
   // })
 
-  app.post('/thoughts/update/:id', function(req, res) {
+  app.post('/user/thoughts/save/:id', function(req, res) {
+    console.log('req.session in save thought: ', req.session);
+
     const id = req.params.id;
     const rawContent = req.body.rawContent;
 
-    const Sessions = db.sessions;
-
-    Sessions.findOne({ 'session.passport.user': req.session.id }, function(err, user) {
-
-    })
+    // const Sessions = db.sessions;
+    //
+    // Sessions.findOne({ 'session.passport.user': req.session.id }, function(err, user) {
+    //
+    // })
 
 
     Thought.findOne({ 'id': id }, function(err, thought) {
@@ -137,4 +152,19 @@ module.exports = function(app, passport) {
     })
   })
 
+}
+
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+	// if user is authenticated in the session, carry on
+	if (req.isAuthenticated()) {
+    console.log('he is');
+    return next();
+  }
+
+  console.log('he isnt');
+	// if they aren't redirect them to the home page
+	res.redirect('/');
 }

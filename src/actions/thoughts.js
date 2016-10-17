@@ -26,13 +26,10 @@ export function saveThought(id, contentState) {
     })
 
     const rawContent = convertToRaw(contentState);
-    const url = 'http://localhost:3000/thoughts/update/' + id;
+    const url = 'http://localhost:3000/user/thoughts/save/' + id;
     fetch(url, {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+      credentials: 'include',
       body: JSON.stringify({
         rawContent: rawContent
       })

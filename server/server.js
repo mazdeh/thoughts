@@ -1,6 +1,5 @@
 var express = require('express');
 var passport = require('passport');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var sessionStore = require('connect-mongo')(session);
@@ -14,24 +13,31 @@ mongoose.connect(db.url);
 var app = express();
 var PORT = process.env.PORT || 3000;
 
-require('./passport')(passport);
-
-app.use(cookieParser());
-app.use(bodyParser.json()); // for parsing application/json
 app.use(express.static(__dirname + '/../dist'));
 
-app.use(session({
+require('./passport')(passport);
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({extended: true}));
+
+const sessionMgr = session({
   secret: 'keyboardcat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 86400,
+    secure: false
+  },
   store: new sessionStore({
     mongooseConnection: mongoose.connection,
-    ttl: 24 * 60 * 60 // = a day
+    ttl: 14 * 24 * 60 * 60
   })
-}));
+});
+
+app.use(sessionMgr);
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-// var alchemy = new AlchemyAPI(auth.alchemyKey);
 
 require('./routes')(app, passport);
 

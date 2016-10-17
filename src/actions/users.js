@@ -14,8 +14,9 @@ export function registerUser(userInfo) {
       }
     })
 
-    fetch(apiUrl + '/users/new', {
+    fetch(apiUrl + '/user/new', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -38,8 +39,9 @@ export function loginUser(userInfo) {
       }
     });
 
-    fetch(apiUrl + '/users/login', {
+    fetch(apiUrl + '/user/login', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -50,11 +52,16 @@ export function loginUser(userInfo) {
       })
     }).then((response) => response.json())
       .then((response) => {
-        console.log('response: ', response)
+        const userObj = {
+          id: response._id,
+          username: response.local.username,
+          thoughtIds: response.thoughts
+        }
+        browserHistory.push('/');
         dispatch({
           type: types.LOGIN_SUCCESSFUL,
           payload: {
-            user: response
+            user: userObj
           }
       });
       dispatch({ type: types.AUTH_TOGGLE, payload: { authed: true }})
@@ -62,7 +69,7 @@ export function loginUser(userInfo) {
       // user object now contains an array of all thought id's
       // get the thoughts from the thought collection when needed
       const userId = response._id;
-      dispatch(setThoughts(userId));
+      // dispatch(setThoughts(userId));
       browserHistory.push('/');
     })
       .catch((err) => dispatch({ type: types.LOGIN_FAILED }))
