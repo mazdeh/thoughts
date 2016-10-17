@@ -18,7 +18,6 @@ ReactDOM.render(
       <Route path="/" component={App} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
-      <Route path="/about" component={App} />
     </Router>
   </Provider>,
   document.getElementById('app')

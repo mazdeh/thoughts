@@ -84,12 +84,36 @@ module.exports = function(app, passport) {
     const id = req.params.id;
     const rawContent = req.body.rawContent;
 
-    // const Sessions = db.sessions;
-    //
-    // Sessions.findOne({ 'session.passport.user': req.session.id }, function(err, user) {
-    //
-    // })
+    if (req.session.passport) {
+      const userId = req.session.passport.user;
+    } else {
+      console.log('User not authed!');
+    }
 
+    // find the user from the session info in the db.
+    User.findOne({ '_id': userId }, function(err, user) {
+      if (err) {
+        console.log('Could not find ')
+      }
+
+      if (!user) {
+        console.log('No user with ID ', userId, ' exists in the db.');
+      }
+
+      else {
+        // store thoughtId in found user's thought[] in the db
+        console.log('heres the user: ', user);
+        user.thoughts.push(id);
+        user.save(function(err) {
+          if (err) {
+            console.log("Could not add thought with ID ", id, " to user ", userId, " 's thought array");
+          } else {
+            console.log("Successfully added thought with ID ", id, " to user's thought array");
+            console.log('user: ', user);
+          }
+        })
+      }
+    })
 
     Thought.findOne({ 'id': id }, function(err, thought) {
       if (err) {
