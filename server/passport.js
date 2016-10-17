@@ -66,8 +66,6 @@ module.exports = function(passport) {
         console.log('Invalid pass.');
         return done(null, false);
       }
-      req.session.name = "vahid has to go";
-      console.log('pass.session: ', req.session);
       return done(null, user);
     })
 

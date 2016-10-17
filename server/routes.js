@@ -3,18 +3,6 @@ var Thought = require('./models/thought');
 var User = require('./models/user');
 
 module.exports = function(app, passport) {
-  app.get('/test', function(req, res) {
-    req.session.name = 'vahidvahid';
-    console.log('req.session: ', req.session);
-    res.end()
-  })
-
-  app.get('/testagain', function(req, res) {
-    console.log('req.session --- ---: ', req.session);
-    req.session.name = 'richrich';
-    res.end();
-  })
-
   app.post('/user/new', passport.authenticate('local-signup', {
     successRedirect: '/',
     failureRedirect: '/register',
