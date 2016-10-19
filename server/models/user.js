@@ -8,8 +8,7 @@ var userSchema = mongoose.Schema({
   local: {
     username: String,
     password: String
-  },
-  thoughts: [String] // _id of thought
+  }
 })
 
 // generating a hash

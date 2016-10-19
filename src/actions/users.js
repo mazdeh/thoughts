@@ -2,7 +2,7 @@ import { browserHistory } from 'react-router';
 
 import * as types from '../constants/ActionTypes';
 import { apiUrl } from '../constants/serverAPI';
-import { setThoughts } from '../actions/thoughts';
+import { setUserThoughts } from '../actions/thoughts';
 
 export function registerUser(userInfo) {
   return function(dispatch) {
@@ -25,7 +25,10 @@ export function registerUser(userInfo) {
         username: userInfo.username,
         password: userInfo.password
       })
-    }).then((response) => dispatch({ type: types.REGISTRATION_SUCCESSFUL }))
+    }).then((response) => {
+      dispatch({ type: types.REGISTRATION_SUCCESSFUL })
+      dispatch(loginUser(userInfo));
+    })
       .catch((err) => dispatch({ type: types.REGISTRATION_FAILED }))
   }
 }
@@ -52,26 +55,27 @@ export function loginUser(userInfo) {
       })
     }).then((response) => response.json())
       .then((response) => {
+
         const userObj = {
           id: response._id,
           username: response.local.username,
           thoughtIds: response.thoughts
         }
-        browserHistory.push('/');
+
         dispatch({
           type: types.LOGIN_SUCCESSFUL,
           payload: {
             user: userObj
           }
-      });
-      dispatch({ type: types.AUTH_TOGGLE, payload: { authed: true }})
+        })
 
-      // user object now contains an array of all thought id's
-      // get the thoughts from the thought collection when needed
-      const userId = response._id;
-      // dispatch(setThoughts(userId));
-      browserHistory.push('/');
-    })
+        dispatch(setUserThoughts(userObj.id));
+        browserHistory.push('/');
+
+        // is this necessary?
+        // do we need auth in our state?
+        dispatch({ type: types.AUTH_TOGGLE, payload: { authed: true }})
+      })
       .catch((err) => dispatch({ type: types.LOGIN_FAILED }))
   }
 }

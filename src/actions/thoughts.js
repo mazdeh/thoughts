@@ -26,6 +26,7 @@ export function saveThought(id, contentState) {
     })
 
     const rawContent = convertToRaw(contentState);
+    console.log('rawContent: ', rawContent);
     const url = 'http://localhost:3000/user/thoughts/save/' + id;
     fetch(url, {
       method: 'POST',
@@ -55,14 +56,18 @@ export function deleteThought(id) {
   }
 }
 
-export function setThoughts(id) {
+export function setUserThoughts(userId) {
   return function(dispatch) {
-    const url = 'http://localhost:3000/user/' + id +'/thoughts';
+    dispatch({ type: types.GET_USER_THOUGHTS_REQUEST })
+    const url = 'http://localhost:3000/user/' + userId + '/thoughts';
     fetch(url)
       .then((response) => response.json())
       .then((response) => {
         const thoughts = convertToContentState(response);
         dispatch(_setThoughts(thoughts))
+      })
+      .catch((err) => {
+        console.log('err: ', err);
       })
   }
 }

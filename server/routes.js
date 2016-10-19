@@ -27,18 +27,19 @@ module.exports = function(app, passport) {
 
   app.get('/user/:id/thoughts', function(req, res) {
     const userId = req.params.id;
-    console.log('user id: ', userId);
-    User.find({ 'userId': userId }, function(err, user) {
+
+    Thought.find({ 'userId': userId }, function(err, thoughts) {
       if (err) {
         console.log('DB ERR: ', err);
       }
 
-      if(!user) {
-        console.log('No User Found!');
+      if (!thoughts) {
+        console.log('User has no Thoughts in db!')
+        // res.status(200).send(thoughts);
       }
 
       else {
-        console.log('found the user');
+        res.status(200).send(thoughts);
       }
     })
   })
@@ -82,7 +83,9 @@ module.exports = function(app, passport) {
     console.log('req.session in save thought: ', req.session);
 
     const id = req.params.id;
-    const rawContent = req.body.rawContent;
+    const rawContent = req.body;
+
+    console.log('raw contentState: ', rawContent);
 
     if (req.session.passport) {
       const userId = req.session.passport.user;
@@ -90,30 +93,30 @@ module.exports = function(app, passport) {
       console.log('User not authed!');
     }
 
-    // find the user from the session info in the db.
-    User.findOne({ '_id': userId }, function(err, user) {
-      if (err) {
-        console.log('Could not find ')
-      }
-
-      if (!user) {
-        console.log('No user with ID ', userId, ' exists in the db.');
-      }
-
-      else {
-        // store thoughtId in found user's thought[] in the db
-        console.log('heres the user: ', user);
-        user.thoughts.push(id);
-        user.save(function(err) {
-          if (err) {
-            console.log("Could not add thought with ID ", id, " to user ", userId, " 's thought array");
-          } else {
-            console.log("Successfully added thought with ID ", id, " to user's thought array");
-            console.log('user: ', user);
-          }
-        })
-      }
-    })
+    // save thoughtId to User's thoughts array
+    // User.findOne({ '_id': userId }, function(err, user) {
+    //   if (err) {
+    //     console.log('Could not find ')
+    //   }
+    //
+    //   if (!user) {
+    //     console.log('No user with ID ', userId, ' exists in the db.');
+    //   }
+    //
+    //   else {
+    //     // store thoughtId in found user's thought[] in the db
+    //     console.log('heres the user: ', user);
+    //     user.thoughts.addToSet(id);
+    //     user.save(function(err) {
+    //       if (err) {
+    //         console.log("Could not add thought with ID ", id, " to user ", userId, " 's thought array");
+    //       } else {
+    //         console.log("Successfully added thought with ID ", id, " to user's thought array");
+    //         console.log('user: ', user);
+    //       }
+    //     })
+    //   }
+    // })
 
     Thought.findOne({ 'id': id }, function(err, thought) {
       if (err) {
@@ -123,6 +126,7 @@ module.exports = function(app, passport) {
 
       if (!thought) {
         var newThought = new Thought();
+        newThought.userId = userId;
         newThought.id = id;
         newThought.rawContent = rawContent;
         newThought.dateCreated = Date.now();
