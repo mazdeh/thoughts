@@ -25,6 +25,7 @@ const sessionMgr = session({
   secret: 'keyboardcat',
   resave: false,
   saveUninitialized: true,
+  unset: 'destroy',
   cookie: {
     maxAge: 86400,
     secure: false

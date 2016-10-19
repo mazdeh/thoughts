@@ -79,3 +79,16 @@ export function loginUser(userInfo) {
       .catch((err) => dispatch({ type: types.LOGIN_FAILED }))
   }
 }
+
+export function logoutUser() {
+  return function(dispatch) {
+    dispatch({ type: types.LOGOUT_REQUEST })
+
+    fetch(apiUrl + '/user/logout', {
+      method: 'POST',
+      credentials: 'include'
+    }).then((response) => response)
+      .then((response) => dispatch({ type: types.LOGOUT_SUCCESSFUL }))
+      .catch((err) => dispatch({ type: types.LOGOUT_FAILED }))
+  }
+}

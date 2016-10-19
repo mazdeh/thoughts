@@ -4,11 +4,13 @@ import { EditorState } from 'draft-js';
 import uuid from 'node-uuid';
 
 import { createThought } from '../actions/thoughts';
+import { logoutUser } from '../actions/users';
 
 export default class UserNav extends Component {
   constructor(props) {
     super(props);
     this.createNewThought = this.createNewThought.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   createNewThought() {
@@ -19,14 +21,15 @@ export default class UserNav extends Component {
   }
 
   logout() {
-    console.log('log user out');
+    const { dispatch } = this.props;
+    dispatch(logoutUser());
   }
 
 
   render() {
     const { auth, user } = this.props;
     const authed = auth.get('authed');
-    
+
     return (
       <div className="user-center">
       {
