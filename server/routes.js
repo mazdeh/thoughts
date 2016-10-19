@@ -83,7 +83,7 @@ module.exports = function(app, passport) {
     console.log('req.session in save thought: ', req.session);
 
     const id = req.params.id;
-    const rawContent = req.body;
+    const rawContent = req.body.rawContent;
 
     console.log('raw contentState: ', rawContent);
 

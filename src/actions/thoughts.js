@@ -31,6 +31,10 @@ export function saveThought(id, contentState) {
     fetch(url, {
       method: 'POST',
       credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         rawContent: rawContent
       })
