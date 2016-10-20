@@ -50,79 +50,15 @@ module.exports = function(app, passport) {
     })
   })
 
-
-  // app.get('/thoughts/all', function(req, res) {
-  //   console.log('req.session: ', req.session);
-  //   Thought.find({}, function(err, thoughts) {
-  //     if (err) {
-  //       console.log('ERR: ', err);
-  //       res.sendStatus(500);
-  //     } else {
-  //       console.log('Thoughts Received!');
-  //       res.send(thoughts);
-  //     }
-  //   })
-  // })
-
-  // app.post('/thoughts/new/:id', function(req, res) {
-  //   const id = req.params.id;
-  //   const rawContent = req.body.rawContent;
-  //   console.log('Creating a new Thought Item with ID: ', id);
-  //
-  //   var newThought = new Thought();
-  //   newThought.id = id;
-  //   console.log('rawContent: ', rawContent);
-  //   newThought.rawContent = rawContent;
-  //
-  //   newThought.save(function(err) {
-  //     if (err) {
-  //       console.log('ERR Could not save new thought: ', err);
-  //       res.sendStatus(500);
-  //     } else {
-  //       res.sendStatus(200);
-  //       console.log('Saved Thought with ID: ', id, 'to db!');
-  //     }
-  //   })
-  // })
-
   app.post('/user/thoughts/save/:id', function(req, res) {
-    console.log('req.session in save thought: ', req.session);
-
     const id = req.params.id;
     const rawContent = req.body.rawContent;
-
-    console.log('raw contentState: ', rawContent);
 
     if (req.session.passport) {
       const userId = req.session.passport.user;
     } else {
       console.log('User not authed!');
     }
-
-    // save thoughtId to User's thoughts array
-    // User.findOne({ '_id': userId }, function(err, user) {
-    //   if (err) {
-    //     console.log('Could not find ')
-    //   }
-    //
-    //   if (!user) {
-    //     console.log('No user with ID ', userId, ' exists in the db.');
-    //   }
-    //
-    //   else {
-    //     // store thoughtId in found user's thought[] in the db
-    //     console.log('heres the user: ', user);
-    //     user.thoughts.addToSet(id);
-    //     user.save(function(err) {
-    //       if (err) {
-    //         console.log("Could not add thought with ID ", id, " to user ", userId, " 's thought array");
-    //       } else {
-    //         console.log("Successfully added thought with ID ", id, " to user's thought array");
-    //         console.log('user: ', user);
-    //       }
-    //     })
-    //   }
-    // })
 
     Thought.findOne({ 'id': id }, function(err, thought) {
       if (err) {
@@ -180,7 +116,6 @@ module.exports = function(app, passport) {
   })
 
 }
-
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {

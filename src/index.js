@@ -16,6 +16,7 @@ ReactDOM.render(
   <Provider store={store} >
     <Router history={browserHistory}>
       <Route path="/" component={App} />
+      <Route path="/me" component={App} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
     </Router>

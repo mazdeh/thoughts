@@ -26,7 +26,6 @@ export function saveThought(id, contentState) {
     })
 
     const rawContent = convertToRaw(contentState);
-    console.log('rawContent: ', rawContent);
     const url = 'http://localhost:3000/user/thoughts/save/' + id;
     fetch(url, {
       method: 'POST',
