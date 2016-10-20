@@ -1,11 +1,7 @@
 import * as types from '../constants/ActionTypes';
 import { Map, Set } from 'immutable';
 
-const initialState = Map({
-  id: null,
-  username: null,
-  thoughtIds: Set()
-});
+const initialState = null;
 
 export default function(state = initialState, action) {
   switch(action.type) {

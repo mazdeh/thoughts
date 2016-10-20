@@ -58,8 +58,7 @@ export function loginUser(userInfo) {
 
         const userObj = {
           id: response._id,
-          username: response.local.username,
-          thoughtIds: response.thoughts
+          username: response.local.username
         }
 
         dispatch({
@@ -74,7 +73,7 @@ export function loginUser(userInfo) {
 
         // is this necessary?
         // do we need auth in our state?
-        dispatch({ type: types.AUTH_TOGGLE, payload: { authed: true }})
+        // dispatch({ type: types.AUTH_TOGGLE, payload: { authed: true }})
       })
       .catch((err) => dispatch({ type: types.LOGIN_FAILED }))
   }

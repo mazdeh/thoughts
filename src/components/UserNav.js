@@ -27,13 +27,12 @@ export default class UserNav extends Component {
 
 
   render() {
-    const { auth, user } = this.props;
-    const authed = auth.get('authed');
+    const { profile } = this.props.user;
 
     return (
       <div className="user-center">
       {
-        authed ?
+        profile ?
         <span>
           <button onClick={this.createNewThought}>PLUS</button>
           <button onClick={this.logout}>Logout</button>
