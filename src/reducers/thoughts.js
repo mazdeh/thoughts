@@ -28,6 +28,8 @@ export default function(state = initialState, action) {
 
     case types.SET_THOUGHTS:
       return _setThoughts(state, action);
+    case types.CLEAR_THOUGHTS:
+      return List();
   }
   return state;
 }

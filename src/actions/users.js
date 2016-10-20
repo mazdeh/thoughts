@@ -81,7 +81,8 @@ export function loginUser(userInfo) {
 
 export function logoutUser() {
   return function(dispatch) {
-    dispatch({ type: types.LOGOUT_REQUEST })
+    dispatch({ type: types.LOGOUT_REQUEST });
+    dispatch({ type: types.CLEAR_THOUGHTS });
 
     fetch(apiUrl + '/user/logout', {
       method: 'POST',
