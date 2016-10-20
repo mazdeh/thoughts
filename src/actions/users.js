@@ -70,10 +70,6 @@ export function loginUser(userInfo) {
 
         dispatch(setUserThoughts(userObj.id));
         browserHistory.push('/');
-
-        // is this necessary?
-        // do we need auth in our state?
-        // dispatch({ type: types.AUTH_TOGGLE, payload: { authed: true }})
       })
       .catch((err) => dispatch({ type: types.LOGIN_FAILED }))
   }
