@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
     case types.DELETE_THOUGHT_FAILED:
       return _deleteRollBack()
 
-    case types.SET_THOUGHTS:
+    case types.SET_USER_THOUGHTS:
       return _setThoughts(state, action);
     case types.CLEAR_THOUGHTS:
       return List();
@@ -80,7 +80,7 @@ function _saveThought(state, action) {
 }
 
 function _setThoughts(state, action) {
-  state = List(action.thoughts);
+  state = List(action.payload.thoughts);
   return state;
 }
 

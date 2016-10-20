@@ -61,23 +61,21 @@ export function deleteThought(id) {
 
 export function setUserThoughts(userId) {
   return function(dispatch) {
-    dispatch({ type: types.GET_USER_THOUGHTS_REQUEST })
     const url = 'http://localhost:3000/user/' + userId + '/thoughts';
     fetch(url)
       .then((response) => response.json())
       .then((response) => {
         const thoughts = convertToContentState(response);
-        dispatch(_setThoughts(thoughts))
+        dispatch({
+          type: types.SET_USER_THOUGHTS,
+          payload: {
+            thoughts
+          }
+        })
       })
       .catch((err) => {
+        console.log("Could not get user's Thoughts from the server!");
         console.log('err: ', err);
       })
-  }
-}
-
-function _setThoughts(thoughts) {
-  return {
-    type: types.SET_THOUGHTS,
-    thoughts
   }
 }
