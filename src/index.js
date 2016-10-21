@@ -9,14 +9,18 @@ import NoMatch from './containers/NoMatch';
 import Login from './components/Login';
 import Register from './components/Register';
 import configureStore from './stores/configureStore';
+import { UserAuthWrapper } from 'redux-auth-wrapper';
 
 const store = configureStore();
+const userIsAuthenticated = UserAuthWrapper({
+  authSelector: state => state.user.profile
+});
+
 
 ReactDOM.render(
   <Provider store={store} >
     <Router history={browserHistory}>
-      <Route path="/" component={App} />
-      <Route path="/me" component={App} />
+      <Route path="/" component={userIsAuthenticated(App)} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
     </Router>
