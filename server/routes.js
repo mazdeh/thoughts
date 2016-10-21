@@ -26,7 +26,6 @@ module.exports = function(app, passport) {
   )
 
   app.post('/user/logout', function(req, res) {
-    console.log('loggin out: ', req.session);
     req.session.destroy();
     res.redirect('/');
   })

@@ -6,6 +6,10 @@ import ThoughtsContainer from '../components/ThoughtsContainer';
 import '../styles/main.scss';
 
 class App extends Component {
+  componentWillMount() {
+    fetch('http://localhost:3000/')
+      .then((response) => response)
+  }
   render() {
     return (
       <span className="container">

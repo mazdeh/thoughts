@@ -1,8 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import { Map, List } from 'immutable';
 
-import sentiment from 'sentiment';
-
 const initialState = List();
 
 export default function(state = initialState, action) {

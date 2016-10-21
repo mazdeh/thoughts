@@ -27,7 +27,6 @@ const sessionMgr = session({
   saveUninitialized: true,
   unset: 'destroy',
   cookie: {
-    maxAge: 86400,
     secure: false
   },
   store: new sessionStore({
