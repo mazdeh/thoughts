@@ -82,7 +82,7 @@ export default class ThoughtForm extends Component {
     const thought = this.props.thought.toJS();
     return (
       <div className="row">
-        <small>
+        <small className="date">
           Date created: {thought.dateCreated} <br></br>
           Last Saved: {thought.lastSaved}
         </small>

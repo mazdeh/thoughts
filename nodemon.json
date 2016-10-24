@@ -1,0 +1,11 @@
+{
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "watch": [
+    "server/*",
+    "package.json",
+    "nodemon.json",
+    "webpack.config.js"
+  ]
+}

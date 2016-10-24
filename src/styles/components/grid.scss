@@ -6,11 +6,16 @@
 
 .row {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: space-between;
   height: auto;
   max-width: 900px;
   padding: 30px;
   margin: 30px auto 30px auto;
-  background-color: rgba(0, 0, 0, .1);
+  background-color: white;
+}
+
+.date {
+  display: flex;
+  opacity: .5;
 }

@@ -40,8 +40,20 @@ app.use(sessionMgr);
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./routes')(app, passport);
+if (process.env.NODE_ENV === 'development') {
+  var webpack = require('webpack');
+  var webpackDev = require('webpack-dev-middleware');
+  var webpackHot = require('webpack-hot-middleware');
+  var compiler = webpack(require('../webpack.config.js'));
 
+  app.use(webpackDev(compiler, {
+    publicPath: '/'
+  }));
+
+  app.use(webpackHot(compiler));
+}
+
+require('./routes')(app, passport);
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'))
 })
