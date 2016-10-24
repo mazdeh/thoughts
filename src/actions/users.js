@@ -69,7 +69,7 @@ export function loginUser(userInfo) {
         })
 
         dispatch(setUserThoughts(userObj.id));
-        browserHistory.push('/');
+        browserHistory.push('/me');
       })
       .catch((err) => dispatch({ type: types.LOGIN_FAILED }))
   }
@@ -87,4 +87,9 @@ export function logoutUser() {
       .then((response) => dispatch({ type: types.LOGOUT_SUCCESSFUL }))
       .catch((err) => dispatch({ type: types.LOGOUT_FAILED }))
   }
+}
+
+export function redirect() {
+  browserHistory.push('/login');
+  return { type: types.REDIRECT };
 }

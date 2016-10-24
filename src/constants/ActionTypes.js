@@ -22,6 +22,8 @@ export const DELETE_THOUGHT_FAILED = 'DELETE_THOUGHT_FAILED';
 
 export const CLEAR_THOUGHTS = 'CLEAR_THOUGHTS';
 
+export const REDIRECT = 'REDIRECT';
+
 export const SET_USER_THOUGHTS = 'SET_USER_THOUGHTS';
 
 export const SET_SCORE = 'SET_SCORE';
