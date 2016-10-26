@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
+import dateformat from 'dateformat';
 // import uuid from 'node-uuid';
 import { throttle } from 'underscore';
+import Button from 'react-bootstrap/lib/Button'
+import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 
 import { saveThought, deleteThought } from '../actions/thoughts';
 
@@ -78,13 +81,21 @@ export default class ThoughtForm extends Component {
     dispatch(deleteThought(id));
   }
 
+  expand() {
+
+  }
+
   render() {
     const thought = this.props.thought.toJS();
     return (
-      <div className="row">
+      <div
+        className="row"
+        onClick={this.expand}
+        >
         <small className="date">
-          Date created: {thought.dateCreated} <br></br>
-          Last Saved: {thought.lastSaved}
+          Verbalized on: {
+            dateformat(thought.dateCreated, "dddd, mmmm dS, yyyy")
+          }
         </small>
         <Editor
           className="editor"
@@ -97,8 +108,10 @@ export default class ThoughtForm extends Component {
           placeholder="Start Writing..."
           ref="editor"
           />
-          <button onClick={this.doneEditing}>SAVE</button>
-          <button onClick={this.deleteItem}>DELETE</button>
+          <ButtonGroup vertical block>
+            <Button bsStyle="primary" onClick={this.doneEditing}>Save</Button>
+            <Button bsStyle="danger" onClick={this.deleteItem}>Delete</Button>
+          </ButtonGroup>
       </div>
     )
   }
