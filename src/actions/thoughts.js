@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes';
 import { convertToContentState } from '../utils/util';
 import { convertToRaw } from 'draft-js';
+import { apiUrl } from '../constants/serverAPI';
 
 export function createThought(id, contentState) {
   return {
@@ -26,7 +27,7 @@ export function saveThought(id, contentState) {
     })
 
     const rawContent = convertToRaw(contentState);
-    const url = 'http://localhost:3000/user/thoughts/save/' + id;
+    const url = apiUrl + '/user/thoughts/save/' + id;
     fetch(url, {
       method: 'POST',
       credentials: 'include',
@@ -51,7 +52,7 @@ export function deleteThought(id) {
       }
     })
 
-    const url = 'http://localhost:3000/thoughts/delete/' + id;
+    const url = apiUrl + '/thoughts/delete/' + id;
     fetch(url, {
       method: 'DELETE'
     }).then((response) => dispatch({ type: types.DELETE_THOUGHT_SUCCESSFUL }))
@@ -61,7 +62,7 @@ export function deleteThought(id) {
 
 export function setUserThoughts(userId) {
   return function(dispatch) {
-    const url = 'http://localhost:3000/user/' + userId + '/thoughts';
+    const url = apiUrl + '/user/' + userId + '/thoughts';
     fetch(url)
       .then((response) => response.json())
       .then((response) => {

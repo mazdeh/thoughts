@@ -4,7 +4,7 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var sessionStore = require('connect-mongo')(session);
-var auth = require('./../src/constants/auth');
+// var auth = require('./../src/constants/auth');
 // var AlchemyAPI = require('alchemy-api');
 
 var db = require('./dbcreds');
@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 mongoose.connect(db.url);
 
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 5000;
 
 app.use(express.static(__dirname + '/../dist'));
 

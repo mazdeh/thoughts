@@ -51,9 +51,10 @@ module.exports = function(app, passport) {
   app.post('/user/thoughts/save/:id', function(req, res) {
     const id = req.params.id;
     const rawContent = req.body.rawContent;
+    let userId;
 
     if (req.session.passport) {
-      const userId = req.session.passport.user;
+      userId = req.session.passport.user;
     } else {
       console.log('User not authed!');
     }
