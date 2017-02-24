@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { byCreatedDate } from '../utils/util';
 
 import Thought from './Thought';
-import ThoughtForm from './ThoughtForm';
+import ThoughtCard from './ThoughtCard';
 
 export default class ThoughtList extends Component {
   render() {
@@ -18,7 +18,7 @@ export default class ThoughtList extends Component {
         {
           sortedByDateCreated ?
             sortedByDateCreated.map((thought) => {
-              return <ThoughtForm key={thought.get('id')} thought={thought} {...this.props} />
+              return <ThoughtCard key={thought.get('id')} thought={thought} {...this.props} />
             }) :
             null
         }

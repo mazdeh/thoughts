@@ -8,6 +8,7 @@ import App from './containers/App';
 import NoMatch from './containers/NoMatch';
 import Login from './components/Login';
 import Register from './components/Register';
+import ThoughtDetail from './containers/ThoughtDetail';
 import configureStore from './stores/configureStore';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { redirect } from './actions/users';
@@ -22,10 +23,13 @@ const userIsAuthenticated = UserAuthWrapper({
 ReactDOM.render(
   <Provider store={store} >
     <Router history={browserHistory}>
-      <Route path="/" component={App} />
-      <Route path="/me" component={userIsAuthenticated(App)} />
-      <Route path="/register" component={Register} />
-      <Route path="/login" component={Login} />
+      <Route path="/" component={App}>
+        <Route path="me" component={userIsAuthenticated(App)}>
+          <Route path="thought/:id" component={ThoughtDetail} />
+        </Route>
+        <Route path="register" component={Register} />
+        <Route path="login" component={Login} />
+      </Route>
     </Router>
   </Provider>,
   document.getElementById('app')
