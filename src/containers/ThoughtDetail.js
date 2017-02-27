@@ -8,6 +8,8 @@ class ThoughtDetail extends Component {
   render() {
     console.log('this.props: ', this.props);
     console.log('id: ', this.props.params.id);
+    const { thoughts } = this.props;
+    // const thought = thoughts.find()
     return (
       <div>sure</div>
     )
