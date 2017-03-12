@@ -101,10 +101,10 @@ export default class ThoughtForm extends Component {
           placeholder="Start Writing..."
           ref="editor"
           />
-          <ButtonGroup vertical block>
-            <Button bsStyle="primary" onClick={this.doneEditing}>Save</Button>
-            <Button bsStyle="danger" onClick={this.deleteItem}>Delete</Button>
-          </ButtonGroup>
+          <div>
+            <button onClick={this.doneEditing}>Save</button>
+            <button onClick={this.deleteItem}>Delete</button>
+          </div>
       </div>
     )
   }

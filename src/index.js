@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-// import { BrowserRouter, Match, Miss } from 'react-router';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 import App from './containers/App';
@@ -10,6 +9,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ThoughtsContainer from './containers/ThoughtsContainer';
 import ThoughtDetail from './containers/ThoughtDetail';
+
 import configureStore from './stores/configureStore';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { redirect } from './actions/users';
