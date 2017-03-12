@@ -27,6 +27,7 @@ module.exports = function(app, passport) {
 
   app.post('/user/logout', function(req, res) {
     req.session.destroy();
+    res.sendStatus(200);
   })
 
   app.get('/user/:id/thoughts', function(req, res) {
