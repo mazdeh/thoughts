@@ -85,7 +85,7 @@ export function logoutUser() {
       credentials: 'include'
     }).then((response) => response)
       .then((response) => {
-        browserHistory.push('/register');
+        browserHistory.push('/login');
         dispatch({ type: types.LOGOUT_SUCCESSFUL })
       })
       .catch((err) => dispatch({ type: types.LOGOUT_FAILED }))

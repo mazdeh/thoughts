@@ -1,3 +1,5 @@
+import { browserHistory } from 'react-router';
+
 import * as types from '../constants/ActionTypes';
 import { convertToContentState } from '../utils/util';
 import { convertToRaw } from 'draft-js';
@@ -51,7 +53,7 @@ export function deleteThought(id) {
         id
       }
     })
-
+    browserHistory.push('/me');
     const url = apiUrl + '/thoughts/delete/' + id;
     fetch(url, {
       method: 'DELETE'

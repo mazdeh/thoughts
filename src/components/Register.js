@@ -25,10 +25,4 @@ class Register extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    state
-  }
-}
-
-export default connect(mapStateToProps)(Register);
+export default connect()(Register);
