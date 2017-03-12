@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import ThoughtForm from '../components/ThoughtForm';
+
 class ThoughtDetail extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
-    console.log('this.props: ', this.props);
-    console.log('id: ', this.props.params.id);
-    const { thoughts } = this.props;
-    // const thought = thoughts.find()
+    const thoughtId = this.props.params.id;
+    const { thoughts, dispatch } = this.props;
+    let thought = thoughts.find((thought) => {
+      return thought.get('id') === thoughtId;
+    })
+
     return (
-      <div>sure</div>
+      <div>
+        <ThoughtForm thought={thought} dispatch={dispatch} />
+      </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  const { thoughts } = state;
+  const { thoughts } = state.user;
   return {
     thoughts
   }

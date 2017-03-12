@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import NavContainer from './NavContainer';
-import ThoughtsContainer from '../components/ThoughtsContainer';
+import ThoughtsContainer from '../containers/ThoughtsContainer';
 import '../styles/main.scss';
 
 class App extends Component {
@@ -11,7 +11,6 @@ class App extends Component {
       <span className="container">
         <NavContainer />
         {this.props.children}
-        <ThoughtsContainer />
       </span>
     )
   }

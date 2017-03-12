@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { EditorState } from 'draft-js';
-import uuid from 'node-uuid';
+import { byCreatedDate } from '../utils/util';
 
-import ThoughtList from './ThoughtList';
-import ThoughtForm from './ThoughtForm';
-
+import ThoughtCard from '../components/ThoughtCard';
 import { createThought, saveThought } from '../actions/thoughts';
 
 class ThoughtsContainer extends Component {
   render() {
     const { dispatch, thoughts } = this.props;
+
+    const sortedByDateCreated = thoughts.sort(byCreatedDate);
     return (
-      <span>
-        <ThoughtList {...this.props} thoughts={thoughts} />
-      </span>
+      <div>
+        {
+          sortedByDateCreated ?
+            sortedByDateCreated.map((thought) => {
+              return <ThoughtCard key={thought.get('id')} thought={thought} {...this.props} />
+            }) :
+            null
+        }
+      </div>
     )
   }
 }

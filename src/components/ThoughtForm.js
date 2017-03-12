@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import dateformat from 'dateformat';
-// import uuid from 'node-uuid';
 import { throttle } from 'underscore';
-import Button from 'react-bootstrap/lib/Button'
-import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 
 import { saveThought, deleteThought } from '../actions/thoughts';
 
@@ -79,10 +76,6 @@ export default class ThoughtForm extends Component {
     const { dispatch } = this.props;
     const { id } = this.state;
     dispatch(deleteThought(id));
-  }
-
-  expand() {
-
   }
 
   render() {
