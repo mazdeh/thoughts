@@ -29,7 +29,7 @@ export function saveThought(id, contentState) {
     })
 
     const rawContent = convertToRaw(contentState);
-    const url = apiUrl + '/user/thoughts/save/' + id;
+    const url = apiUrl + '/user/thoughts/' + id;
     fetch(url, {
       method: 'POST',
       credentials: 'include',
@@ -54,9 +54,10 @@ export function deleteThought(id) {
       }
     })
     browserHistory.push('/me');
-    const url = apiUrl + '/thoughts/delete/' + id;
+    const url = apiUrl + '/user/thoughts/' + id;
     fetch(url, {
-      method: 'DELETE'
+      method: 'DELETE',
+      credentials: 'include'
     }).then((response) => dispatch({ type: types.DELETE_THOUGHT_SUCCESSFUL }))
       .catch((err) => dispatch({ type: types.DELETE_THOUGHT_FAILED }))
   }
@@ -65,7 +66,9 @@ export function deleteThought(id) {
 export function setUserThoughts(userId) {
   return function(dispatch) {
     const url = apiUrl + '/user/' + userId + '/thoughts';
-    fetch(url)
+    fetch(url, {
+      credentials: 'include'
+    })
       .then((response) => response.json())
       .then((response) => {
         const thoughts = convertToContentState(response);

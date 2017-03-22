@@ -30,6 +30,10 @@ module.exports = function(app, passport) {
     res.sendStatus(200);
   })
 
+  app.all('/user/*', protectedRoute, function(req, res, next) {
+    next();
+  })
+
   app.get('/user/:id/thoughts', function(req, res) {
     const userId = req.params.id;
 
@@ -49,7 +53,7 @@ module.exports = function(app, passport) {
     })
   })
 
-  app.post('/user/thoughts/save/:id', function(req, res) {
+  app.post('/user/thoughts/:id', function(req, res) {
     const id = req.params.id;
     const rawContent = req.body.rawContent;
     let userId;
@@ -101,7 +105,7 @@ module.exports = function(app, passport) {
     })
   })
 
-  app.delete('/thoughts/delete/:id', function(req, res) {
+  app.delete('/user/thoughts/:id', function(req, res) {
     const id = req.params.id;
 
     Thought.remove({ 'id': id }, function(err) {
@@ -109,6 +113,8 @@ module.exports = function(app, passport) {
         console.log('ERR: ', err);
         res.sendStatus(500);
       } else {
+        // TODO: does this actually mean an object was deleted from the db?
+        // it seems to hit the else even if the id wasn't found in the db.
         console.log('Deleted Thought with ID: ', id);
         res.sendStatus(200);
       }
@@ -118,15 +124,12 @@ module.exports = function(app, passport) {
 }
 
 // route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
-
-	// if user is authenticated in the session, carry on
-	if (req.isAuthenticated()) {
-    console.log('he is');
-    return next();
+function protectedRoute(req, res, next) {
+  if (req.session && req.session.userId) {
+    next();
+  } else {
+    // TODO: redirect user to /login through react router on the UI
+    console.log('User is not authenticated.');
+    res.redirect('/');
   }
-
-  console.log('he isnt');
-	// if they aren't redirect them to the home page
-	res.redirect('/');
 }
