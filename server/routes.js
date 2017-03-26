@@ -14,13 +14,17 @@ module.exports = function(app, passport) {
     }
   )
 
+  app.post('/user/current', function(req, res) {
+    const user = req.user;
+    res.send(user);
+  })
+
   app.post('/user/login',
     passport.authenticate('local-login', {
       failureRedirect: '/'
     }),
     function(req, res) {
       req.session.userId = req.user._id;
-      console.log('req.session', req.session);
       res.status(200).send(req.user);
     }
   )

@@ -96,3 +96,28 @@ export function redirect() {
   browserHistory.push('/login');
   return { type: types.REDIRECT };
 }
+
+export function currentUser() {
+  return function(dispatch) {
+    dispatch({ type: types.LOGIN_REQUEST });
+
+    fetch(apiUrl + '/user/current', {
+      method: 'POST',
+      credentials: 'include'
+    }).then((response) => response.json())
+      .then((response) => {
+        const userObj = {
+          id: response._id,
+          username: response.local.username
+        }
+        dispatch({
+          type: types.LOGIN_SUCCESSFUL,
+          payload: {
+            user: userObj
+          }
+        })
+        dispatch(setUserThoughts(userObj.id));
+        browserHistory.push('/me');
+      })
+  }
+}
