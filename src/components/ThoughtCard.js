@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import dateformat from 'dateformat';
 
 export default class ThoughtCard extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class ThoughtCard extends Component {
     return (
       <Link to={`me/thought/${thought.id}`}>
         <div>
-          {thought.dateCreated}
+          {dateformat(thought.dateCreated, "dddd, mmmm dS, yyyy")}
         </div>
       </Link>
     )
