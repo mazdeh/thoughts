@@ -9,7 +9,7 @@ export default class ThoughtCard extends Component {
 
   render() {
     const thought = this.props.thought.toJS();
-    console.log('thought: ', thought);
+
     return (
       <div>
         <Link to={`me/thought/${thought.id}`}>
