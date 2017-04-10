@@ -9,13 +9,18 @@ export default class ThoughtCard extends Component {
 
   render() {
     const thought = this.props.thought.toJS();
-
+    console.log('thought: ', thought);
     return (
-      <Link to={`me/thought/${thought.id}`}>
+      <div>
+        <Link to={`me/thought/${thought.id}`}>
+          <div>
+            <strong>{dateformat(thought.dateCreated, "dddd, mmmm dS, yyyy")}</strong>
+          </div>
+        </Link>
         <div>
-          {dateformat(thought.dateCreated, "dddd, mmmm dS, yyyy")}
+          <small>{thought.rawContent.blocks[0].text}</small>
         </div>
-      </Link>
+      </div>
     )
   }
 
