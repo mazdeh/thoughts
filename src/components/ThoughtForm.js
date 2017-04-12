@@ -5,6 +5,12 @@ import { throttle } from 'underscore';
 
 import { saveThought, deleteThought } from '../actions/thoughts';
 
+const editorStyles = {
+  'BOLD': {
+    fontSize: '3em',
+  }
+}
+
 export default class ThoughtForm extends Component {
   constructor(props) {
     super(props)
@@ -80,6 +86,7 @@ export default class ThoughtForm extends Component {
 
   render() {
     const thought = this.props.thought.toJS();
+    console.log('thought: ', thought)
     return (
       <div
         className="row"
@@ -92,6 +99,8 @@ export default class ThoughtForm extends Component {
         </small>
         <Editor
           className="editor"
+          customStyleMap={editorStyles}
+          textAlignment='center'
           editorState={this.state.editorState}
           spellCheck={true}
           handleKeyCommand={this.handleKeyCommand}

@@ -18,7 +18,7 @@ export default class ThoughtCard extends Component {
           </div>
         </Link>
         <div>
-          <small>{thought.rawContent.blocks[0].text}</small>
+          <small>{thought.rawContent ? thought.rawContent.blocks[0].text : null}</small>
         </div>
       </div>
     )
