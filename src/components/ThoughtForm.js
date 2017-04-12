@@ -86,7 +86,7 @@ export default class ThoughtForm extends Component {
 
   render() {
     const thought = this.props.thought.toJS();
-    console.log('thought: ', thought)
+    
     return (
       <div
         className="row"
