@@ -3,9 +3,14 @@ import { connect } from 'react-redux';
 import { byCreatedDate } from '../utils/util';
 
 import ThoughtCard from '../components/ThoughtCard';
-import { createThought, saveThought } from '../actions/thoughts';
+import { setUserThoughts } from '../actions/thoughts';
 
 class ThoughtsContainer extends Component {
+  componentDidMount() {
+    const { dispatch, user } = this.props;
+    dispatch(setUserThoughts(user.id));
+  }
+
   render() {
     const { dispatch, thoughts } = this.props;
 
@@ -14,7 +19,7 @@ class ThoughtsContainer extends Component {
       <div>
         {
           sortedByDateCreated ?
-            sortedByDateCreated.map((thought) => {
+            sortedByDateCreated.map(thought => {
               return <ThoughtCard key={thought.get('id')} thought={thought} {...this.props} />
             }) :
             null
@@ -25,9 +30,10 @@ class ThoughtsContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const { thoughts } = state.user;
+  const { user, thoughts } = state;
   return {
-    thoughts
+    user,
+    thoughts,
   }
 }
 

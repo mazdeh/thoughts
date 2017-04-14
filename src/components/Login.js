@@ -1,16 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { loginUser } from '../actions/users';
 import Form from './Form';
+import { currentUser } from '../actions/users';
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.login = this.login.bind(this);
+    this.state = {
+      redirectToReferrer: false,
+    };
   }
 
-  login(state, e) {
+  componentWillMount() {
+    const { dispatch, auth } = this.props;
+    if (!auth) {
+      dispatch(currentUser());
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.auth !== nextProps.auth) {
+      this.setState({
+        redirectToReferrer: true,
+      });
+    }
+  }
+
+  login = (state, e) => {
     e.preventDefault();
     const { dispatch } = this.props;
     const userInfo = state;
@@ -18,10 +37,29 @@ class Login extends Component {
   }
 
   render() {
-    return(
-      <Form onSubmit={this.login} />
-    )
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { redirectToReferrer } = this.state;
+
+    if (redirectToReferrer) {
+      return (
+        <Redirect to={from} />
+      );
+    }
+
+    return (
+      <div>
+        Please log in below:
+        <Form onSubmit={this.login} />
+      </div>
+    );
   }
 }
 
-export default connect()(Login);
+function mapStateToProps(state) {
+  const { auth } = state;
+  return {
+    auth,
+  }
+}
+
+export default connect(mapStateToProps)(Login);

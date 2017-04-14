@@ -1,26 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import UserNav from '../components/UserNav';
 
-class Nav extends Component {
-  render() {
-    return(
-      <div className="nav-container">
-        <span className="nav-logo">T</span>
+const NavContainer = ({ user }) => (
+  <div className="nav-container">
+    <span className="nav-logo">T</span>
+    <UserNav user={user} />
+  </div>
+)
 
-        <UserNav {...this.props} />
-      </div>
-    )
-  }
-}
 
 function mapStateToProps(state) {
-  const { auth, user } = state;
+  const { user } = state;
   return {
-    auth,
     user
   }
 }
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps)(NavContainer);

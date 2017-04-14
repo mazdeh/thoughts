@@ -1,8 +1,8 @@
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 
 import * as types from '../constants/ActionTypes';
 import { apiUrl } from '../constants/serverAPI';
-import { setUserThoughts } from '../actions/thoughts';
+// import { setUserThoughts } from '../actions/thoughts';
 
 export function registerUser(userInfo) {
   return function(dispatch) {
@@ -68,8 +68,7 @@ export function loginUser(userInfo) {
           }
         })
 
-        dispatch(setUserThoughts(userObj.id));
-        browserHistory.push('/me');
+        // dispatch(setUserThoughts(userObj.id));
       })
       .catch((err) => dispatch({ type: types.LOGIN_FAILED }))
   }
@@ -116,8 +115,6 @@ export function currentUser() {
             user: userObj
           }
         })
-        dispatch(setUserThoughts(userObj.id));
-        browserHistory.push('/me');
       })
   }
 }

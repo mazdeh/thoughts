@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { EditorState } from 'draft-js';
 import uuid from 'node-uuid';
 
@@ -7,33 +7,28 @@ import { createThought } from '../actions/thoughts';
 import { logoutUser } from '../actions/users';
 
 export default class UserNav extends Component {
-  constructor(props) {
-    super(props);
-    this.createNewThought = this.createNewThought.bind(this);
-    this.logout = this.logout.bind(this);
-  }
-
-  createNewThought() {
+  createNewThought = () => {
     const { dispatch } = this.props;
     const id = uuid.v4();
     const contentState = EditorState.createEmpty().getCurrentContent();
     dispatch(createThought(id, contentState));
   }
 
-  logout() {
+  logout = () => {
     const { dispatch } = this.props;
     dispatch(logoutUser());
   }
 
 
   render() {
-    const { profile } = this.props.user;
+    const { user } = this.props;
 
     return (
       <div className="user-center">
       {
-        profile ?
+        user ?
         <span>
+          <span>{user.username} </span>
           <button onClick={this.createNewThought}>PLUS</button>
           <button onClick={this.logout}>Logout</button>
         </span> :

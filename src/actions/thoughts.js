@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 
 import * as types from '../constants/ActionTypes';
 import { convertToContentState } from '../utils/util';
