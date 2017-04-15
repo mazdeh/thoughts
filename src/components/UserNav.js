@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { EditorState } from 'draft-js';
 import uuid from 'node-uuid';
@@ -6,7 +7,7 @@ import uuid from 'node-uuid';
 import { createThought } from '../actions/thoughts';
 import { logoutUser } from '../actions/users';
 
-export default class UserNav extends Component {
+class UserNav extends Component {
   createNewThought = () => {
     const { dispatch } = this.props;
     const id = uuid.v4();
@@ -41,3 +42,5 @@ export default class UserNav extends Component {
     )
   }
 }
+
+export default connect()(UserNav);

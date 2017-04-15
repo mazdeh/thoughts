@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import dateformat from 'dateformat';
-import { throttle } from 'underscore';
+import { isEmpty, throttle } from 'underscore';
 
-import { saveThought, deleteThought } from '../actions/thoughts';
+import { setUserThoughts, aveThought, deleteThought } from '../actions/thoughts';
 
 const editorStyles = {
   'BOLD': {
@@ -11,28 +12,42 @@ const editorStyles = {
   }
 }
 
-export default class ThoughtForm extends Component {
+class ThoughtForm extends Component {
   constructor(props) {
     super(props)
-    const { dispatch, thought } = props;
-
-    this.doneEditing = this.doneEditing.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-
     this.autoSave = throttle(this.autoSave, 10 * 1000);
 
-    this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    this.focus = this.focus.bind(this);
-    this.onEscape = this.onEscape.bind(this);
-
+    const thoughtId = props.match.params.id;
     this.state = {
-      id: thought.get('id'),
-      editorState: EditorState.createWithContent(thought.get('contentState'))
+      thought: null,
+      id: thoughtId,
+      editorState: null,
     };
 
     this.onChange = (editorState) => {
       this.setState({ editorState });
       this.autoSave();
+    }
+  }
+
+  componentDidMount() {
+    const { dispatch, user, thoughts } = this.props;
+    dispatch(setUserThoughts(user.id));
+    if (!thoughts) {
+      dispatch(setUserThoughts(user.id));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.thoughts !== nextProps.thoughts) {
+      let thought = nextProps.thoughts.find((thought) => {
+        return thought.get('id') === this.state.id;
+      });
+      this.setState({
+        thought: thought,
+        id: thought ? thought.get('id') : null,
+        editorState: thought ? EditorState.createWithContent(thought.get('contentState')) : null,
+      })
     }
   }
 
@@ -49,7 +64,6 @@ export default class ThoughtForm extends Component {
     this.setState({
       editing: true
     })
-    // chnage style to full height/full screen
   }
 
   onEscape() {
@@ -59,7 +73,7 @@ export default class ThoughtForm extends Component {
     })
   }
 
-  handleKeyCommand(command) {
+  handleKeyCommand = (command) => {
     const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
     if (newState) {
       this.onChange(newState);
@@ -68,7 +82,7 @@ export default class ThoughtForm extends Component {
     return false;
   }
 
-  doneEditing() {
+  doneEditing = () => {
     const { dispatch } = this.props;
     const { id, editorState } = this.state;
     this.setState({
@@ -78,17 +92,17 @@ export default class ThoughtForm extends Component {
     // dispatch(setScore(id, editorState.getCurrentContent()));
   }
 
-  deleteItem() {
+  deleteItem = () => {
     const { dispatch } = this.props;
     const { id } = this.state;
     dispatch(deleteThought(id));
   }
 
   render() {
-    const thought = this.props.thought.toJS();
-    
+
+    const { thought } = this.state;
     return (
-      <div
+      thought ? (<div
         className="row"
         onClick={this.expand}
         >
@@ -114,8 +128,19 @@ export default class ThoughtForm extends Component {
             <button onClick={this.doneEditing}>Save</button>
             <button onClick={this.deleteItem}>Delete</button>
           </div>
-      </div>
+      </div>) : null
     )
   }
 
 }
+
+
+function mapStateToProps(state) {
+  const { user, thoughts } = state;
+  return {
+    user,
+    thoughts,
+  }
+}
+
+export default connect(mapStateToProps)(ThoughtForm);

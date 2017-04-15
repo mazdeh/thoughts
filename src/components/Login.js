@@ -24,7 +24,7 @@ class Login extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.auth !== nextProps.auth) {
       this.setState({
-        redirectToReferrer: true,
+        redirectToReferrer: nextProps.auth,
       });
     }
   }

@@ -1,15 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import NavContainer from '../containers/NavContainer';
-import ThoughtsContainer from '../containers/ThoughtsContainer';
 import '../styles/main.scss';
 
-
 const App = () => (
-  <div className="container">
-    <NavContainer />
-    <ThoughtsContainer />
-  </div>
+  <Link to="/me">Your Thoughts</Link>
 );
 
 export default App;
