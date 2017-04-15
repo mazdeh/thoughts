@@ -4,7 +4,7 @@ import { Editor, EditorState, RichUtils } from 'draft-js';
 import dateformat from 'dateformat';
 import { isEmpty, throttle } from 'underscore';
 
-import { setUserThoughts, aveThought, deleteThought } from '../actions/thoughts';
+import { setUserThoughts, saveThought, deleteThought } from '../actions/thoughts';
 
 const editorStyles = {
   'BOLD': {
@@ -140,7 +140,7 @@ function mapStateToProps(state) {
   return {
     user,
     thoughts,
-  }
+  };
 }
 
 export default connect(mapStateToProps)(ThoughtForm);

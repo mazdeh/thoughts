@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
 import App from './App';
@@ -15,7 +15,7 @@ const Root = () => (
     <Switch>
       <PrivateRoute path="/me/:id" component={ThoughtForm} />
       <PrivateRoute path="/me" component={ThoughtsContainer} />
-      <Route exact path="/" component={App} />
+      <PrivateRoute exact path="/" component={App} />
     </Switch>
     <Route path="/" component={NavContainer} />
     <Route path="/login" component={Login} />

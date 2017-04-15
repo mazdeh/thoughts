@@ -1,7 +1,7 @@
 import * as types from '../constants/ActionTypes';
 import { Map, List } from 'immutable';
 
-const initialState = List();
+const initialState = [];
 
 export default function(state = initialState, action) {
   switch(action.type) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { EditorState } from 'draft-js';
-import uuid from 'node-uuid';
+import uuid from 'uuid';
 
 import { createThought } from '../actions/thoughts';
 import { logoutUser } from '../actions/users';

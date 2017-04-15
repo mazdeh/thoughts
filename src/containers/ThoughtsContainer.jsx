@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { byCreatedDate } from '../utils/util';
 
@@ -7,25 +8,27 @@ import { setUserThoughts } from '../actions/thoughts';
 
 class ThoughtsContainer extends Component {
   componentDidMount() {
-    const { dispatch, user } = this.props;
-    dispatch(setUserThoughts(user.id));
+    const { dispatch, user, thoughts } = this.props;
+    if (!thoughts && user) {
+      dispatch(setUserThoughts(user.id));
+    }
   }
 
   render() {
-    const { dispatch, thoughts } = this.props;
+    const { thoughts } = this.props;
 
     const sortedByDateCreated = thoughts.sort(byCreatedDate);
     return (
       <div>
         {
           sortedByDateCreated ?
-            sortedByDateCreated.map(thought => {
-              return <ThoughtCard key={thought.get('id')} thought={thought} {...this.props} />
-            }) :
+            sortedByDateCreated.map(thought => (
+              <ThoughtCard key={thought.get('id')} thought={thought} {...this.props} />
+            )) :
             null
         }
       </div>
-    )
+    );
   }
 }
 
@@ -34,7 +37,16 @@ function mapStateToProps(state) {
   return {
     user,
     thoughts,
-  }
+  };
 }
+
+ThoughtsContainer.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    username: PropTypes.string,
+  }).isRequired,
+  thoughts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps)(ThoughtsContainer);

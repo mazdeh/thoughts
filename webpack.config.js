@@ -1,6 +1,6 @@
 // uncomment for hot-reloading!
-var webpack = require('webpack');
-var path = require('path');
+// var webpack = require('webpack');
+// var path = require('path');
 
 module.exports = {
   devtool: 'source-map',
@@ -14,7 +14,7 @@ module.exports = {
     path: './dist',
     publicPath: '/',
     // path: path.resolve(__dirname, '/dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   // plugins: [
   //   new webpack.DefinePlugin({
@@ -25,8 +25,21 @@ module.exports = {
   //   new webpack.optimize.OccurenceOrderPlugin(), // bundle order
   //   new webpack.HotModuleReplacementPlugin()
   // ],
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+  },
   module: {
     loaders: [
+      {
+        enforce: 'pre',
+        test: /\.jsx?/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          failOnWarning: false,
+          failOnError: false,
+        },
+      },
       { test: /\.scss/, loader: 'style!css!sass' },
       { test: /\.json$/, loader: 'json-loader' },
       {
@@ -34,9 +47,9 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015', 'stage-2']
-        }
-      }
-    ]
-  }
+          presets: ['react', 'es2015', 'stage-2'],
+        },
+      },
+    ],
+  },
 };

@@ -1,11 +1,9 @@
-// import { browserHistory } from 'react-router';
-
 import * as types from '../constants/ActionTypes';
-import { apiUrl } from '../constants/serverAPI';
+import apiUrl from '../constants/serverAPI';
 // import { setUserThoughts } from '../actions/thoughts';
 
 export function registerUser(userInfo) {
-  return function(dispatch) {
+  return function (dispatch) {
     // TODO: hash pass
     dispatch({
       type: types.REGISTRATION_REQUEST,
@@ -84,7 +82,6 @@ export function logoutUser() {
       credentials: 'include'
     }).then((response) => response)
       .then((response) => {
-        browserHistory.push('/login');
         dispatch({ type: types.LOGOUT_SUCCESSFUL })
       })
       .catch((err) => dispatch({ type: types.LOGOUT_FAILED }))
@@ -98,7 +95,7 @@ export function redirect() {
 
 export function currentUser() {
   return function(dispatch) {
-    dispatch({ type: types.LOGIN_REQUEST });
+    dispatch({ type: types.GET_CURRENT_USER });
 
     fetch(apiUrl + '/user/current', {
       method: 'POST',

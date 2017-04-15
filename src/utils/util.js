@@ -2,7 +2,7 @@ import { Map } from 'immutable';
 import { convertFromRaw } from 'draft-js';
 
 export function convertToContentState(thoughts) {
-  let thoughtsForRedux = [];
+  const thoughtsForRedux = [];
   thoughts.forEach((thought) => {
     if (!thought.rawContent.entityMap) {
       thought.rawContent['entityMap'] = {};
@@ -13,7 +13,7 @@ export function convertToContentState(thoughts) {
       contentState: contentState
     });
     thoughtsForRedux.push(thoughtForRedux);
-  })
+  });
   return thoughtsForRedux;
 }
 

@@ -1,16 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-// import App from './containers/App';
-// import NoMatch from './containers/NoMatch';
-// import Login from './components/Login';
-// import Register from './components/Register';
-// import ThoughtsContainer from './containers/ThoughtsContainer';
-// import ThoughtDetail from './containers/ThoughtDetail';
 import Root from './components/Root';
-
 import configureStore from './stores/configureStore';
 
 const store = configureStore();
@@ -28,5 +21,5 @@ ReactDOM.render(
       <Root />
     </Router>
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('app'),
 );

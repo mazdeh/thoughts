@@ -1,6 +1,6 @@
-var uuid = require('node-uuid');
-var Thought = require('./models/thought');
-var User = require('./models/user');
+// const uuid = require('node-uuid');
+const Thought = require('./models/thought');
+// const User = require('./models/user');
 
 module.exports = function(app, passport) {
   app.post('/user/new',
