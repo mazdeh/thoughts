@@ -69,6 +69,7 @@ export function setUserThoughts(userId) {
     })
       .then((response) => response.json())
       .then((response) => {
+        // const thoughts = response;
         const thoughts = convertToContentState(response);
         dispatch({
           type: types.SET_USER_THOUGHTS,

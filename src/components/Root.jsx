@@ -19,6 +19,7 @@ const Root = () => (
     </Switch>
     <Route path="/" component={NavContainer} />
     <Route path="/login" component={Login} />
+    <Route path="/register" component={Register} />
   </div>
 );
 

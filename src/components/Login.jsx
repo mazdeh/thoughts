@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { loginUser } from '../actions/users';
+import { loginUser, currentUser } from '../actions/users';
 import Form from './Form';
-import { currentUser } from '../actions/users';
 
 class Login extends Component {
   constructor(props) {
@@ -55,11 +55,24 @@ class Login extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   const { auth } = state;
   return {
     auth,
-  }
-}
+  };
+};
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  auth: PropTypes.bool,
+  location: PropTypes.shape({
+    state: PropTypes.object,
+  }),
+};
+
+Login.defaultProps = {
+  auth: false,
+  location: null,
+};
 
 export default connect(mapStateToProps)(Login);

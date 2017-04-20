@@ -27,4 +27,4 @@ export const REDIRECT = 'REDIRECT';
 
 export const SET_USER_THOUGHTS = 'SET_USER_THOUGHTS';
 
-export const SET_SCORE = 'SET_SCORE';
+export const SELECTED_THOUGHT = 'SELECTED_THOUGHT';

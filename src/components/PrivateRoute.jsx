@@ -8,4 +8,12 @@ const PrivateRoute = ({ component, ...rest }) => (
   <Route {...rest} render={props => <ProtectedComponent {...props} component={component} />} />
 );
 
+PrivateRoute.propTypes = {
+  component: PropTypes.oneOf(
+    PropTypes.component,
+    PropTypes.func,
+    PropTypes.element,
+  ).isRequired,
+};
+
 export default PrivateRoute;

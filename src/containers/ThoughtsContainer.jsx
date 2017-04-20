@@ -9,7 +9,7 @@ import { setUserThoughts } from '../actions/thoughts';
 class ThoughtsContainer extends Component {
   componentDidMount() {
     const { dispatch, user, thoughts } = this.props;
-    if (!thoughts && user) {
+    if (thoughts.length === 0) {
       dispatch(setUserThoughts(user.id));
     }
   }

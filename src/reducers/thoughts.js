@@ -3,36 +3,7 @@ import { Map, List } from 'immutable';
 
 const initialState = [];
 
-export default function(state = initialState, action) {
-  switch(action.type) {
-    case types.CREATE_THOUGHT:
-      return _createThought(state, action);
-
-
-    case types.SAVE_THOUGHT_REQUEST:
-      return _saveThought(state, action);
-    case types.SAVE_THOUGHT_SUCCESSFUL:
-      return state;
-    case types.SAVE_THOUGHT_FAILED:
-      // roll back state, cause data was not save to db.
-      return _stateRollBakc();
-
-    case types.DELETE_THOUGHT_REQUEST:
-      return _deleteThought(state, action);
-    case types.DELETE_THOUGHT_SUCCESSFUL:
-      return state;
-    case types.DELETE_THOUGHT_FAILED:
-      return _deleteRollBack()
-
-    case types.SET_USER_THOUGHTS:
-      return _setThoughts(state, action);
-    case types.CLEAR_THOUGHTS:
-      return List();
-  }
-  return state;
-}
-
-function _createThought(state, action) {
+function createThought(state, action) {
   // if there's an empty thought, don't create a new one
   const lastThought = state.last();
   if (lastThought) {
@@ -53,7 +24,7 @@ function _createThought(state, action) {
   )
 }
 
-function _saveThought(state, action) {
+function saveThought(state, action) {
   const thoughtIndex = state.findIndex((thought) => {
     return thought.get('id') === action.payload.id;
   })
@@ -77,12 +48,7 @@ function _saveThought(state, action) {
   }))
 }
 
-function _setThoughts(state, action) {
-  state = List(action.payload.thoughts);
-  return state;
-}
-
-function _deleteThought(state, action) {
+function deleteThought(state, action) {
   const thoughtIndex = state.findIndex((thought) => {
     return thought.get('id') === action.payload.id;
   })
@@ -92,4 +58,22 @@ function _deleteThought(state, action) {
   }
 
   return state.delete(thoughtIndex);
+}
+
+
+export default function (state = initialState, action) {
+  switch (action.type) {
+    case types.CREATE_THOUGHT:
+      return createThought(state, action);
+    case types.SAVE_THOUGHT_REQUEST:
+      return saveThought(state, action);
+    case types.DELETE_THOUGHT_REQUEST:
+      return deleteThought(state, action);
+    case types.SET_USER_THOUGHTS:
+      return action.payload.thoughts;
+    case types.CLEAR_THOUGHTS:
+      return [];
+    default:
+      return state;
+  }
 }

@@ -9,9 +9,7 @@ export function convertToContentState(thoughts) {
     }
     const contentState = convertFromRaw(thought.rawContent);
     const thoughtMap = Map(thought);
-    const thoughtForRedux = thoughtMap.merge({
-      contentState: contentState
-    });
+    const thoughtForRedux = thoughtMap.merge({ contentState });
     thoughtsForRedux.push(thoughtForRedux);
   });
   return thoughtsForRedux;

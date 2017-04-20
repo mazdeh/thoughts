@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { registerUser } from '../actions/users';
 
 import Form from './Form';
 
 class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.register = this.register.bind(this);
-  }
 
-  register(state, e) {
+  register = (state, e) => {
     // redirect to post-signup page?!
     e.preventDefault();
     const { dispatch } = this.props;
@@ -19,10 +16,12 @@ class Register extends Component {
   }
 
   render() {
-    return (
-      <Form onSubmit={this.register} />
-    )
+    return <Form onSubmit={this.register} />;
   }
 }
+
+Register.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect()(Register);

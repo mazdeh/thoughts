@@ -52,6 +52,9 @@ module.exports = function(app, passport) {
       }
 
       else {
+        console.log('thoughts: ', thoughts)
+        console.log('----------------------------------------------------------------- ---')
+        console.log('thoughts[1]: ', thoughts[1]);
         res.status(200).send(thoughts);
       }
     })
