@@ -46,7 +46,7 @@ class UserNav extends Component {
 
 UserNav.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  user: PropTypes.objectOf({
+  user: PropTypes.shape({
     id: PropTypes.string,
     username: PropTypes.string,
   }),

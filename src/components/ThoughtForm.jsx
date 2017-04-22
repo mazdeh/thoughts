@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Editor, EditorState, RichUtils } from 'draft-js';
+import { Editor, EditorState } from 'draft-js';
 import dateformat from 'dateformat';
 import { throttle } from 'underscore';
 
-import { setUserThoughts, saveThought, deleteThought } from '../actions/thoughts';
+import { setUserThoughts, saveThought } from '../actions/thoughts';
 
 const editorStyles = {
   BOLD: {

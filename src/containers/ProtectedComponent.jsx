@@ -32,12 +32,8 @@ const mapStateToProps = (state) => {
 
 ProtectedComponent.propTypes = {
   auth: PropTypes.bool.isRequired,
-  component: PropTypes.oneOf([
-    PropTypes.component,
-    PropTypes.element,
-    PropTypes.func,
-  ]).isRequired,
-  location: PropTypes.objectOf({
+  component: PropTypes.func.isRequired,
+  location: PropTypes.shape({
     state: PropTypes.object,
   }),
 };

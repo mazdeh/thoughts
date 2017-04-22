@@ -19,9 +19,14 @@ const mapStateToProps = (state) => {
 };
 
 NavContainer.propTypes = {
-  user: PropTypes.objecOf({
+  user: PropTypes.shape({
     id: PropTypes.string,
     username: PropTypes.string,
-  }).isRequired,
+  }),
 };
+
+NavContainer.defaultProps = {
+  user: null,
+};
+
 export default connect(mapStateToProps)(NavContainer);

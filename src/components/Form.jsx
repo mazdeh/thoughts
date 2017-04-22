@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Label from './Label';
 
@@ -50,3 +51,8 @@ export default class Form extends Component {
     );
   }
 }
+
+
+Form.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
